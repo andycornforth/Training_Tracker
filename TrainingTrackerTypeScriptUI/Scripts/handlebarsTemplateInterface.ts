@@ -1,0 +1,3 @@
+﻿interface HandlebarsTemplates {
+    CreateUserForm: HandlebarsTemplateDelegate;
+}

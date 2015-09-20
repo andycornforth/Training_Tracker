@@ -1,0 +1,66 @@
+﻿@model TrainingTrackerMVC.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div id="register-email">
+        @Html.LabelFor(m => m.Email)
+        <div>
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+    </div>
+    <div id="register-password">
+        @Html.LabelFor(m => m.Password)
+        <div>
+            @Html.PasswordFor(m => m.Password)
+        </div>
+    </div>
+    <div id="register-confirm-password">
+        @Html.LabelFor(m => m.ConfirmPassword)
+        <div>
+            @Html.PasswordFor(m => m.ConfirmPassword)
+        </div>
+    </div>
+    <div id="register-first-name">
+        @Html.LabelFor(m => m.FirstName)
+        <div>
+            @Html.TextBoxFor(m => m.FirstName)
+        </div>
+    </div>
+    <div id="register-last-name">
+        @Html.LabelFor(m => m.LastName)
+        <div>
+            @Html.TextBoxFor(m => m.LastName)
+        </div>
+    </div>
+    <div id="register-gender">
+        @Html.LabelFor(m => m.Gender)
+        <div>
+            @Html.RadioButtonFor(m => m.Gender, 1) Male
+            @Html.RadioButtonFor(m => m.Gender, 2) Female
+        </div>
+    </div>
+    <div id="register-dob">
+        @Html.LabelFor(m => m.Dob)
+        <div>
+            @Html.TextBoxFor(m => m.Dob)
+        </div>
+    </div>
+    <div>
+        <div>
+            <input type="submit" value="Register" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

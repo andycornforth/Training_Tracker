@@ -1,0 +1,16 @@
+﻿@model System.Collections.Generic.List<Models.Log>
+
+@{
+    ViewBag.Title = "View Logs";
+}
+
+<h2>View Logs</h2>
+
+<div>
+    @foreach (var log in Model)
+    {
+    <div>
+        @log.Title
+    </div>
+    }
+</div>

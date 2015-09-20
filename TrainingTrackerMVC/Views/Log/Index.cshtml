@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("ViewAllLogs", "Log", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    <div>
+        <input type="submit" value="View your logs" />
+    </div>
+}
+
+@using (Html.BeginForm("AddLogView", "Log", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    <div>
+        <input type="submit" value="Create a new log" />
+    </div>
+}
