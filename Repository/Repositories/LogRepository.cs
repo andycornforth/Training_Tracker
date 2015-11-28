@@ -17,8 +17,7 @@ namespace Repository
 
     public class LogRepository : BaseSqlRepository, ILogRepository
     {
-        public LogRepository(IConnectionStringProvider connectionStringProvider)
-            : base(connectionStringProvider)
+        public LogRepository() : base()
         {
         }
 

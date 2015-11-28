@@ -15,11 +15,9 @@ namespace RepositoryTests
         [TestInitialize]
         public void SetUp()
         {
-            var connectionStringProvider = new ConnectionStringProvider();
+            _personRepository = new PersonRepository();
 
-            _personRepository = new PersonRepository(connectionStringProvider);
-
-            dataHelper = new IntegrationTestData(connectionStringProvider);
+            dataHelper = new IntegrationTestData();
             dataHelper.SetUp();
         }
 
@@ -38,7 +36,7 @@ namespace RepositoryTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
+        [ExpectedException(typeof(Exception), "The email address 'test@user.com' is already in use.")]
         public void AddDuplicatePersonToPersonTableExpectErrorThrown()
         {
             var person = CreateTestPerson("testperson1000");

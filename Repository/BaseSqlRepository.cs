@@ -10,13 +10,8 @@ namespace Repository
 {
     public class BaseSqlRepository
     {
-        private string _connectionString;
+        private string _connectionString = new ConnectionStringProvider().GetConnectionString();
         private const short MaxDeadlockRetryAttempts = 2;
-
-        public BaseSqlRepository(IConnectionStringProvider connectionStringProvider)
-        {
-            _connectionString = connectionStringProvider.GetConnectionString();
-        }
 
         protected IDbCommand GetCommand(string commandText, CommandType commandType)
         {

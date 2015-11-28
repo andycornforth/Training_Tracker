@@ -33,6 +33,8 @@ namespace TrainingTrackerMVC
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
+        public IPersonBusiness PersonBusiness;
+
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
@@ -94,7 +96,6 @@ namespace TrainingTrackerMVC
         {
             try
             {
-                var personBusiness = new PersonBusiness();
                 var person = new Person()
                 {
                     Username = user.UserName,
@@ -106,7 +107,7 @@ namespace TrainingTrackerMVC
                     DOB = user.Dob
                 };
 
-                personBusiness.AddPersonToDatabase(person);
+                PersonBusiness.AddPersonToDatabase(person);
                 return IdentityResult.Success;
             }
             catch (Exception e)
@@ -119,6 +120,8 @@ namespace TrainingTrackerMVC
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
+        public IPersonBusiness PersonBusiness;
+
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
@@ -141,10 +144,9 @@ namespace TrainingTrackerMVC
 
         private SignInStatus AuthenticateUser(string userName, string enteredPassword)
         {
-            var personBusiness = new PersonBusiness();
-            var person = personBusiness.GetPersonByUsername(userName);
+            var person = PersonBusiness.GetPersonByUsername(userName);
 
-            if(person.Password == Encryption.HashWithSalt(enteredPassword))
+            if(person?.Password == Encryption.HashWithSalt(enteredPassword))
             {
                 return SignInStatus.Success;
             }

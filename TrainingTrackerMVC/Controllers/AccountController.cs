@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TrainingTrackerMVC.Models;
+using Business;
 
 namespace TrainingTrackerMVC.Controllers
 {
@@ -18,14 +19,11 @@ namespace TrainingTrackerMVC.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IPersonBusiness personBusiness)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            UserManager.PersonBusiness = SignInManager.PersonBusiness = personBusiness;
         }
 
         public ApplicationSignInManager SignInManager
@@ -80,7 +78,7 @@ namespace TrainingTrackerMVC.Controllers
             {
                 case SignInStatus.Success:
                     System.Web.HttpContext.Current.Session.Add("Username", model.Email);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Log");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -169,7 +167,7 @@ namespace TrainingTrackerMVC.Controllers
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     System.Web.HttpContext.Current.Session.Add("Username", user.UserName);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

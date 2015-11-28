@@ -12,9 +12,9 @@ namespace TrainingTrackerMVC.Controllers
     {
         private ILogBusiness _logBusiness;
 
-        public LogController()
+        public LogController(ILogBusiness logBusiness)
         {
-            _logBusiness = new LogBusiness();
+            _logBusiness = logBusiness;
         }
 
         public ActionResult Index()

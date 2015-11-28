@@ -10,13 +10,20 @@ namespace BusinessTests
     [TestClass]
     public class PersonBusinessTests
     {
+        private Mock<IPersonRepository> _mockPersonRepository;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            _mockPersonRepository = new Mock<IPersonRepository>();
+        }
+
         [TestMethod]
         public void AddValidPersonExpectPersonAddedAndNoErrorThrown()
         {
-            var mockPersonRepository = new Mock<IPersonRepository>();
-            mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
+            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
 
-            var personBusiness = new PersonBusiness(mockPersonRepository.Object);
+            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
 
             var person = GetTestPerson("testuser");
 
@@ -24,12 +31,23 @@ namespace BusinessTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exception), "Date of birth cannot be in the future")]
+        public void AddPersonWithDateOfBirthInTheFutureExpectErrorThrown()
+        {
+            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
+
+            var person = GetTestPerson("testuser");
+            person.DOB = new DateTime(2100, 1, 1);
+
+            personBusiness.AddPersonToDatabase(person);
+        }
+
+        [TestMethod]
         public void AddNullPersonExpectPersonNotAdded()
         {
-            var mockPersonRepository = new Mock<IPersonRepository>();
-            mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
+            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
 
-            var personBusiness = new PersonBusiness(mockPersonRepository.Object);
+            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
 
             personBusiness.AddPersonToDatabase(null);
         }
@@ -53,10 +71,9 @@ namespace BusinessTests
         {
             var username = "test123";
 
-            var mockPersonRepository = new Mock<IPersonRepository>();
-            mockPersonRepository.Setup(x => x.GetPersonByUsername(It.IsAny<string>())).Returns(GetTestPerson(username));
+            _mockPersonRepository.Setup(x => x.GetPersonByUsername(It.IsAny<string>())).Returns(GetTestPerson(username));
 
-            var personBusiness = new PersonBusiness(mockPersonRepository.Object);
+            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
 
             var person = personBusiness.GetPersonByUsername(username);
 

@@ -18,11 +18,6 @@ namespace Business
     {
         private ILogRepository _logRepository;
 
-        public LogBusiness()
-        {
-            _logRepository = new LogRepository(new ConnectionStringProvider());
-        }
-
         public LogBusiness(ILogRepository logRepository)
         {
             _logRepository = logRepository;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +17,13 @@ namespace Repository
 
     public class PersonRepository : BaseSqlRepository, IPersonRepository
     {
-        public PersonRepository(IConnectionStringProvider connectionStringProvider)
-            : base(connectionStringProvider)
+        public PersonRepository() : base()
         {
         }
 
         public void AddPerson(Person person)
         {
-            var command = GetCommand("AddPerson", System.Data.CommandType.StoredProcedure);
+            var command = GetCommand("AddPerson", CommandType.StoredProcedure);
 
             AddParameter(command, "@Username", person.Username);
             AddParameter(command, "@Password", person.Password);
@@ -33,13 +33,22 @@ namespace Repository
             AddParameter(command, "@DOB", person.DOB);
             AddParameter(command, "@Gender", (int)person.Gender);
 
-            ExecuteNonQueryChecked(command);
+            try
+            {
+                ExecuteNonQueryChecked(command);
+            }
+            catch (SqlException e)
+            {
+                switch (e.Number) {
+                    case 2627:
+                        throw new Exception($"The email address '{person.Username}' is already in use.");
+                }
+            }
         }
 
         public Person GetPersonByUsername(string username)
         {
-            var query = @"SELECT * FROM [Person] WHERE Username = @Username";
-            var command = GetCommand(query, System.Data.CommandType.Text);
+            var command = GetCommand("GetPersonByUsername", CommandType.StoredProcedure);
 
             AddParameter(command, "@Username", username);
 

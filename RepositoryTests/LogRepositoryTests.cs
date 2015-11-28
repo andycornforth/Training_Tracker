@@ -17,12 +17,10 @@ namespace RepositoryTests
         [TestInitialize]
         public void SetUp()
         {
-            var connectionStringProvider = new ConnectionStringProvider();
+            _logRepository = new LogRepository();
+            _personRepository = new PersonRepository();
 
-            _logRepository = new LogRepository(connectionStringProvider);
-            _personRepository = new PersonRepository(connectionStringProvider);
-
-            dataHelper = new IntegrationTestData(connectionStringProvider);
+            dataHelper = new IntegrationTestData();
             dataHelper.SetUp();
         }
 

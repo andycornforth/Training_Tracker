@@ -8,8 +8,8 @@ namespace RepositoryTests
         public static object LockObject = new object();
         public static bool DataInitialized = false;
 
-        public IntegrationTestData(IConnectionStringProvider connectionStringProvider)
-            : base(connectionStringProvider)
+        public IntegrationTestData()
+            : base()
         {
 
         }

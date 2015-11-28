@@ -13,11 +13,6 @@ namespace TrainingTrackerAPI.Controllers
     {
         private IPersonBusiness _personBusiness;
 
-        public PersonController()
-        {
-            _personBusiness = new PersonBusiness();
-        }
-
         public PersonController(IPersonBusiness personBusiness)
         {
             _personBusiness = personBusiness;

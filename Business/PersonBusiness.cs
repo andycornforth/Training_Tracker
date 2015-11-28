@@ -20,7 +20,6 @@ namespace Business
 
         public PersonBusiness()
         {
-            _personRepository = new PersonRepository(new ConnectionStringProvider());
         }
 
         public PersonBusiness(IPersonRepository personRepository)
@@ -32,6 +31,9 @@ namespace Business
         {
             if (person != null)
             {
+                if (person.DOB.CompareTo(DateTime.Now) > 0)
+                    throw new Exception("Date of birth cannot be in the future");
+
                 person.Password = Encryption.HashWithSalt(person.Password);
                 _personRepository.AddPerson(person);
             }

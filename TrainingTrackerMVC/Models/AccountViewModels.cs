@@ -95,6 +95,8 @@ namespace TrainingTrackerMVC.Models
         public Gender Gender { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = ("Date of Birth"))]
         public DateTime Dob { get; set; }
     }
