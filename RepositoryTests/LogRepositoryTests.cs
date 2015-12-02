@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Repository;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace RepositoryTests
 {
@@ -40,6 +41,21 @@ namespace RepositoryTests
             var userId = _personRepository.GetPersonByUsername(email).Id;
 
             _logRepository.AddLog(CreateTestLog(userId, logTitle));
+        }
+
+        [TestMethod]
+        public void AddLogExpectDateToBeAdded()
+        {
+            var email = "test@user.com";
+            var logTitle = "newlog";
+
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            var allLogs = _logRepository.GetAllLogsByUserId(userId);
+
+            Assert.AreEqual(DateTime.Today, allLogs.FirstOrDefault().DateAdded.Date);
         }
 
         [TestMethod]

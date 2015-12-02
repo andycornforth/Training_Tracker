@@ -27,6 +27,7 @@ namespace Repository
 
             AddParameter(command, "@PersonId", log.PersonId);
             AddParameter(command, "@Title", log.Title);
+            AddParameter(command, "@Date", DateTime.Now);
 
             ExecuteNonQueryChecked(command);
         }
@@ -57,7 +58,8 @@ namespace Repository
             {
                 Id = reader.GetInt32(reader.GetOrdinal("LogId")),
                 PersonId = reader.GetInt32(reader.GetOrdinal("PersonId")),
-                Title = reader.GetString(reader.GetOrdinal("Title"))
+                Title = reader.GetString(reader.GetOrdinal("Title")),
+                DateAdded = reader.GetDateTime(reader.GetOrdinal("DateAdded"))
             };
         }
     }
