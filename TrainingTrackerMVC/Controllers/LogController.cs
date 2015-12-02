@@ -19,43 +19,29 @@ namespace TrainingTrackerMVC.Controllers
 
         public ActionResult Index()
         {
-            if (System.Web.HttpContext.Current.Session["Username"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //if (System.Web.HttpContext.Current.Session["Username"] == null)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
             return View();
         }
 
         public ActionResult ViewAllLogs()
         {
-            if (System.Web.HttpContext.Current.Session["Username"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var allLogs = _logBusiness.GetAllLogsByUsername(System.Web.HttpContext.Current.Session["Username"].ToString()).ToList();
+            var userId = Convert.ToInt32(System.Web.HttpContext.Current.Session["UserId"]);
+            var allLogs = _logBusiness.GetAllLogsByUserId(userId);
 
             return View(allLogs);
         }
 
         public ActionResult AddLogView()
         {
-            if (System.Web.HttpContext.Current.Session["Username"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View("AddNewLog");
         }
 
         public ActionResult AddLog(Log model)
         {
-            if (System.Web.HttpContext.Current.Session["Username"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            model.Username = System.Web.HttpContext.Current.Session["Username"].ToString();
+            model.PersonId = Convert.ToInt32(System.Web.HttpContext.Current.Session["UserId"]);
 
             _logBusiness.AddLogToDatabase(model);
 

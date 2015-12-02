@@ -18,11 +18,13 @@ namespace TrainingTrackerMVC.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IPersonBusiness _personBusiness;
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IPersonBusiness personBusiness)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _personBusiness = personBusiness;
             UserManager.PersonBusiness = SignInManager.PersonBusiness = personBusiness;
         }
 
@@ -77,7 +79,8 @@ namespace TrainingTrackerMVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    System.Web.HttpContext.Current.Session.Add("Username", model.Email);
+                    var user = _personBusiness.GetPersonByUsername(model.Email);
+                    System.Web.HttpContext.Current.Session.Add("UserId", user.Id);
                     return RedirectToAction("Index", "Log");
                 case SignInStatus.LockedOut:
                     return View("Lockout");

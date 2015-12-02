@@ -26,31 +26,31 @@ namespace BusinessTests
 
             var personBusiness = new LogBusiness(_mockLogRepository.Object);
 
-            var log = GetTestLog("testuser", "testlog");
+            var log = GetTestLog(1, "testlog");
         }
 
         [TestMethod]
         public void GetAllLogsByUsernameFromDatabase()
         {
-            _mockLogRepository.Setup(x => x.GetAllLogsByUsername(It.IsAny<string>())).Returns(GetListOfLogs());
+            _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
 
             var personBusiness = new LogBusiness(_mockLogRepository.Object);
 
-            var username = "testuser";
+            var userId = 1;
 
-            var logs = personBusiness.GetAllLogsByUsername(username);
+            var logs = personBusiness.GetAllLogsByUserId(userId);
 
             Assert.AreEqual("test title", logs[0].Title);
         }
 
         [TestMethod]
-        public void GetAllLogsByUsernameWithNullExpectNoErrorThrown()
+        public void GetAllLogsByUserId0ExpectNoErrorThrown()
         {
-            _mockLogRepository.Setup(x => x.GetAllLogsByUsername(It.IsAny<string>())).Returns(GetListOfLogs());
+            _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
 
             var personBusiness = new LogBusiness(_mockLogRepository.Object);
 
-            var logs = personBusiness.GetAllLogsByUsername(null);
+            var logs = personBusiness.GetAllLogsByUserId(0);
 
             Assert.IsNull(logs);
         }
@@ -60,7 +60,7 @@ namespace BusinessTests
         {
             var personBusiness = new LogBusiness(_mockLogRepository.Object);
 
-            personBusiness.AddLogToDatabase(GetTestLog("testuser", "testlog"));
+            personBusiness.AddLogToDatabase(GetTestLog(1, "testlog"));
         }
 
         [TestMethod]
@@ -78,17 +78,17 @@ namespace BusinessTests
                 new Log()
                 {
                     Id=1,
-                    Username ="testuser",
+                    PersonId = 1,
                     Title ="test title"
                 }
             };
         }
 
-        private Log GetTestLog(string username, string title)
+        private Log GetTestLog(int userId, string title)
         {
             return new Log()
             {
-                Username = username,
+                PersonId = userId,
                 Title = title
             };
         }

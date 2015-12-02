@@ -11,7 +11,7 @@ namespace Business
     public interface ILogBusiness
     {
         void AddLogToDatabase(Log person);
-        IList<Log> GetAllLogsByUsername(string username);
+        IList<Log> GetAllLogsByUserId(int userId);
     }
 
     public class LogBusiness : ILogBusiness
@@ -31,12 +31,12 @@ namespace Business
             }
         }
 
-        public IList<Log> GetAllLogsByUsername(string username)
+        public IList<Log> GetAllLogsByUserId(int userId)
         {
-            if (username == null)
+            if (userId == 0)
                 return null;
 
-            return _logRepository.GetAllLogsByUsername(username);
+            return _logRepository.GetAllLogsByUserId(userId);
         }
     }
 }

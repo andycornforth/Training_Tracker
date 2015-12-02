@@ -33,54 +33,63 @@ namespace RepositoryTests
         [TestMethod]
         public void AddLogToLogTableExpectLogAdded()
         {
-            var username = "testuser";
+            var email = "test@user.com";
             var logTitle = "newlog";
 
-            AddPersonToDatabase(username);
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
 
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
         }
 
         [TestMethod]
         [ExpectedException(typeof(SqlException))]
         public void AUserCanNotHave2LogsWithTheSameName()
         {
-            var username = "testuser";
+            var email = "test@user.com";
             var logTitle = "newlog";
 
-            AddPersonToDatabase(username);
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
 
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
         }
 
         [TestMethod]
         public void _2UsersCanHaveALogWithTheSameName()
         {
-            var username = "testuser";
-            var username2 = "testuser2";
+
+            var email = "test@user.com";
+            var email2 = "test2@user.com";
+
             var logTitle = "newlog";
 
-            AddPersonToDatabase(username);
-            AddPersonToDatabase(username2);
+            AddPersonToDatabase(email);
+            AddPersonToDatabase(email2);
 
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
-            _logRepository.AddLog(CreateTestLog(username2, logTitle));
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+            var userId2 = _personRepository.GetPersonByUsername(email2).Id;
+
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            _logRepository.AddLog(CreateTestLog(userId2, logTitle));
         }
 
         [TestMethod]
         public void GetAllLogsFromDatabaseByUsername()
         {
-            var username = "testuser";
+            var email = "test@user.com";
+
             var logTitle = "newlog";
             var logTitle2 = "secondLog";
 
-            AddPersonToDatabase(username);
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
 
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
-            _logRepository.AddLog(CreateTestLog(username, logTitle2));
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            _logRepository.AddLog(CreateTestLog(userId, logTitle2));
 
-            var allLogs = _logRepository.GetAllLogsByUsername(username);
+            var allLogs = _logRepository.GetAllLogsByUserId(userId);
 
             Assert.AreEqual(2, allLogs.Count);
             Assert.AreEqual("newlog", allLogs[0].Title);
@@ -89,39 +98,41 @@ namespace RepositoryTests
         [TestMethod]
         public void GetLogFromDatabaseById()
         {
-            var username = "testuser";
+            var email = "test@user.com";
+
             var logTitle = "newlog";
 
-            AddPersonToDatabase(username);
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
 
-            _logRepository.AddLog(CreateTestLog(username, logTitle));
-            var logs = _logRepository.GetAllLogsByUsername(username);
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            var logs = _logRepository.GetAllLogsByUserId(userId);
 
             var log = _logRepository.GetLogById(logs[0].Id);
 
             Assert.AreEqual(logs[0].Id, log.Id);
-            Assert.AreEqual("testuser", log.Username);
+            Assert.AreEqual(userId, log.PersonId);
             Assert.AreEqual("newlog", log.Title);
         }
 
-        private Log CreateTestLog(string username, string logTitle)
+        private Log CreateTestLog(int userId, string logTitle)
         {
             return new Log()
             {
-                Username = username,
+                PersonId = userId,
                 Title = logTitle
             };
         }
 
-        private void AddPersonToDatabase(string username)
+        private void AddPersonToDatabase(string email)
         {
             var person = new Person()
             {
-                Username = username,
+                Username = email,
                 Password = "Password1",
                 FirstName = "Test",
                 LastName = "User",
-                Email = "test@user.com",
+                Email = email,
                 DOB = new DateTime(1993, 1, 22),
                 Gender = Gender.MALE
             };

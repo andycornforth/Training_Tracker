@@ -39,7 +39,8 @@ namespace Repository
             }
             catch (SqlException e)
             {
-                switch (e.Number) {
+                switch (e.Number)
+                {
                     case 2627:
                         throw new Exception($"The email address '{person.Username}' is already in use.");
                 }
@@ -59,6 +60,7 @@ namespace Repository
         {
             return new Person()
             {
+                Id = reader.GetInt32(reader.GetOrdinal("PersonId")),
                 Username = reader.GetString(reader.GetOrdinal("Username")),
                 Password = reader.GetString(reader.GetOrdinal("Password")),
                 FirstName = reader.GetString(reader.GetOrdinal("FirstName")),

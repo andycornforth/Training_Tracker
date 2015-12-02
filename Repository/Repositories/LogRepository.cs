@@ -12,7 +12,7 @@ namespace Repository
     {
         void AddLog(Log log);
         Log GetLogById(int id);
-        IList<Log> GetAllLogsByUsername(string username);
+        IList<Log> GetAllLogsByUserId(int userId);
     }
 
     public class LogRepository : BaseSqlRepository, ILogRepository
@@ -25,7 +25,7 @@ namespace Repository
         {
             var command = GetCommand("AddLog", System.Data.CommandType.StoredProcedure);
 
-            AddParameter(command, "@Username", log.Username);
+            AddParameter(command, "@PersonId", log.PersonId);
             AddParameter(command, "@Title", log.Title);
 
             ExecuteNonQueryChecked(command);
@@ -41,12 +41,12 @@ namespace Repository
             return GetEntitiesFromDatabase<Log>(command).FirstOrDefault();
         }
 
-        public IList<Log> GetAllLogsByUsername(string username)
+        public IList<Log> GetAllLogsByUserId(int userId)
         {
-            var query = @"SELECT * FROM [Log] WHERE Username = @Username";
+            var query = @"SELECT * FROM [Log] WHERE PersonId = @PersonId";
             var command = GetCommand(query, CommandType.Text);
 
-            AddParameter(command, "@Username", username);
+            AddParameter(command, "@PersonId", userId);
 
             return GetEntitiesFromDatabase<Log>(command);
         }
@@ -56,7 +56,7 @@ namespace Repository
             return new Log()
             {
                 Id = reader.GetInt32(reader.GetOrdinal("LogId")),
-                Username = reader.GetString(reader.GetOrdinal("Username")),
+                PersonId = reader.GetInt32(reader.GetOrdinal("PersonId")),
                 Title = reader.GetString(reader.GetOrdinal("Title"))
             };
         }
