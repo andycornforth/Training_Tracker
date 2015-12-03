@@ -5,6 +5,7 @@ using Moq;
 using Models;
 using Business;
 using System.Collections.Generic;
+using Business.Exceptions;
 
 namespace BusinessTests
 {
@@ -12,6 +13,7 @@ namespace BusinessTests
     public class LogBusinessTests
     {
         private Mock<ILogRepository> _mockLogRepository;
+        private ILogBusiness _logBusiness;
 
         [TestInitialize]
         public void SetUp()
@@ -19,14 +21,9 @@ namespace BusinessTests
             _mockLogRepository = new Mock<ILogRepository>();
         }
 
-        [TestMethod]
-        public void AddValidPersonExpectPersonAddedAndNoErrorThrown()
+        private void InitializeLogBusiness()
         {
-            _mockLogRepository.Setup(x => x.AddLog(It.IsAny<Log>())).Verifiable();
-
-            var personBusiness = new LogBusiness(_mockLogRepository.Object);
-
-            var log = GetTestLog(1, "testlog");
+            _logBusiness = new LogBusiness(_mockLogRepository.Object);
         }
 
         [TestMethod]
@@ -34,11 +31,11 @@ namespace BusinessTests
         {
             _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
 
-            var personBusiness = new LogBusiness(_mockLogRepository.Object);
+            InitializeLogBusiness();
 
             var userId = 1;
 
-            var logs = personBusiness.GetAllLogsByUserId(userId);
+            var logs = _logBusiness.GetAllLogsByUserId(userId);
 
             Assert.AreEqual("test title", logs[0].Title);
         }
@@ -48,9 +45,9 @@ namespace BusinessTests
         {
             _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
 
-            var personBusiness = new LogBusiness(_mockLogRepository.Object);
+            InitializeLogBusiness();
 
-            var logs = personBusiness.GetAllLogsByUserId(0);
+            var logs = _logBusiness.GetAllLogsByUserId(0);
 
             Assert.IsNull(logs);
         }
@@ -58,17 +55,18 @@ namespace BusinessTests
         [TestMethod]
         public void AddLogExpectNoError()
         {
-            var personBusiness = new LogBusiness(_mockLogRepository.Object);
+            InitializeLogBusiness();
 
-            personBusiness.AddLogToDatabase(GetTestLog(1, "testlog"));
+            _logBusiness.AddLogToDatabase(GetTestLog(1, "testlog"));
         }
 
         [TestMethod]
-        public void AddNullLogExpectNoError()
+        [ExpectedException(typeof(BusinessException))]
+        public void AddNullLogExpectErrorThrown()
         {
-            var personBusiness = new LogBusiness(_mockLogRepository.Object);
+            InitializeLogBusiness();
 
-            personBusiness.AddLogToDatabase(null);
+            _logBusiness.AddLogToDatabase(null);
         }
 
         private IList<Log> GetListOfLogs()

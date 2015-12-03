@@ -11,45 +11,12 @@ namespace BusinessTests
     public class PersonBusinessTests
     {
         private Mock<IPersonRepository> _mockPersonRepository;
+        private IPersonBusiness _personBusiness;
 
         [TestInitialize]
         public void SetUp()
         {
             _mockPersonRepository = new Mock<IPersonRepository>();
-        }
-
-        [TestMethod]
-        public void AddValidPersonExpectPersonAddedAndNoErrorThrown()
-        {
-            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
-
-            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
-
-            var person = GetTestPerson("testuser");
-
-            personBusiness.AddPersonToDatabase(person);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(Exception), "Date of birth cannot be in the future")]
-        public void AddPersonWithDateOfBirthInTheFutureExpectErrorThrown()
-        {
-            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
-
-            var person = GetTestPerson("testuser");
-            person.DOB = new DateTime(2100, 1, 1);
-
-            personBusiness.AddPersonToDatabase(person);
-        }
-
-        [TestMethod]
-        public void AddNullPersonExpectPersonNotAdded()
-        {
-            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
-
-            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
-
-            personBusiness.AddPersonToDatabase(null);
         }
 
         private Person GetTestPerson(string username)
@@ -66,6 +33,45 @@ namespace BusinessTests
             };
         }
 
+        private void InitializePersonBusiness()
+        {
+            _personBusiness = new PersonBusiness(_mockPersonRepository.Object);
+        }
+
+        [TestMethod]
+        public void AddValidPersonExpectPersonAddedAndNoErrorThrown()
+        {
+            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
+
+            InitializePersonBusiness();
+
+             var person = GetTestPerson("testuser");
+
+            _personBusiness.AddPersonToDatabase(person);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "Date of birth cannot be in the future")]
+        public void AddPersonWithDateOfBirthInTheFutureExpectErrorThrown()
+        {
+            InitializePersonBusiness();
+
+            var person = GetTestPerson("testuser");
+            person.DOB = new DateTime(2100, 1, 1);
+
+            _personBusiness.AddPersonToDatabase(person);
+        }
+
+        [TestMethod]
+        public void AddNullPersonExpectPersonNotAdded()
+        {
+            _mockPersonRepository.Setup(x => x.AddPerson(It.IsAny<Person>())).Verifiable();
+
+            InitializePersonBusiness();
+
+            _personBusiness.AddPersonToDatabase(null);
+        }
+
         [TestMethod]
         public void GetPersonByUsernameExpectPerson()
         {
@@ -73,9 +79,9 @@ namespace BusinessTests
 
             _mockPersonRepository.Setup(x => x.GetPersonByUsername(It.IsAny<string>())).Returns(GetTestPerson(username));
 
-            var personBusiness = new PersonBusiness(_mockPersonRepository.Object);
+            InitializePersonBusiness();
 
-            var person = personBusiness.GetPersonByUsername(username);
+            var person = _personBusiness.GetPersonByUsername(username);
 
             Assert.IsNotNull(person);
             Assert.AreEqual("Test", person.FirstName);

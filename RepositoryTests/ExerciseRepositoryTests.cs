@@ -66,5 +66,25 @@ namespace RepositoryTests
 
             Assert.IsNull(exercise);
         }
+
+        [TestMethod]
+        public void GetAllExercisesWithNoExercisesInTheDatabaseReturnsEmptyList()
+        {
+            var exercises = _exerciseRepository.GetAllExercises();
+
+            Assert.AreEqual(0, exercises.Count);
+        }
+
+        [TestMethod]
+        public void GetAllExercisesReturnsAllExercises()
+        {
+            _exerciseRepository.AddExercise("Barbell Bench Press");
+            _exerciseRepository.AddExercise("Barbell Back Squat");
+            _exerciseRepository.AddExercise("Barbell Bent-over Row");
+
+            var exercises = _exerciseRepository.GetAllExercises();
+
+            Assert.AreEqual(3, exercises.Count);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Business.Exceptions;
+using Models;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,10 @@ namespace Business
 
         public void AddLogToDatabase(Log log)
         {
-            if (log != null)
-            {
-                _logRepository.AddLog(log);
-            }
+            if (log == null)
+                throw new BusinessException("Log cannot be null");
+
+            _logRepository.AddLog(log);
         }
 
         public IList<Log> GetAllLogsByUserId(int userId)

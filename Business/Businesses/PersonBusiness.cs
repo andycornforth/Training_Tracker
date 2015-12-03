@@ -18,10 +18,6 @@ namespace Business
     {
         private IPersonRepository _personRepository;
 
-        public PersonBusiness()
-        {
-        }
-
         public PersonBusiness(IPersonRepository personRepository)
         {
             _personRepository = personRepository;

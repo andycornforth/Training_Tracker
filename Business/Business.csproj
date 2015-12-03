@@ -56,10 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="BusinessUnityConfig.cs" />
     <Compile Include="Helpers\Encryption.cs" />
-    <Compile Include="LogBusiness.cs" />
-    <Compile Include="PersonBusiness.cs" />
+    <Compile Include="Businesses\ExerciseBusiness.cs" />
+    <Compile Include="Businesses\LogBusiness.cs" />
+    <Compile Include="Businesses\PersonBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

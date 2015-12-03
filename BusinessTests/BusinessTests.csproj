@@ -53,9 +53,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EncryptionTests.cs" />
-    <Compile Include="LogBusinessTests.cs" />
-    <Compile Include="PersonBusinessTests.cs" />
+    <Compile Include="Tests\EncryptionTests.cs" />
+    <Compile Include="Tests\LogBusinessTests.cs" />
+    <Compile Include="Tests\ExerciseBusinessTests.cs" />
+    <Compile Include="Tests\PersonBusinessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

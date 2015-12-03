@@ -72,6 +72,7 @@
     <Build Include="Stored Procedures\GetExercise.sql" />
     <Build Include="Stored Procedures\GetLogById.sql" />
     <Build Include="Stored Procedures\GetAllLogsByPersonId.sql" />
+    <Build Include="Stored Procedures\GetAllExercises.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TrainingTracker.refactorlog" />

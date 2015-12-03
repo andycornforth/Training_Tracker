@@ -12,6 +12,7 @@ namespace Repository
     {
         Exercise AddExercise(string title);
         Exercise GetExerciseById(int id);
+        IList<Exercise> GetAllExercises();
     }
 
     public class ExerciseRepository : BaseSqlRepository, IExerciseRepository
@@ -36,6 +37,13 @@ namespace Repository
             AddParameter(command, "@Id", id);
 
             return GetEntitiesFromDatabase<Exercise>(command).FirstOrDefault();
+        }
+
+        public IList<Exercise> GetAllExercises()
+        {
+            var command = GetCommand("GetAllExercises", CommandType.StoredProcedure);
+
+            return GetEntitiesFromDatabase<Exercise>(command);
         }
 
         protected override object MapRowToEntity(IDataReader reader)
