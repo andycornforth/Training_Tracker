@@ -1,4 +1,5 @@
 ﻿using Models;
+using Repository.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,13 +38,9 @@ namespace Repository
             {
                 ExecuteNonQueryChecked(command);
             }
-            catch (SqlException e)
+            catch (SqlException e) when (e.Number == 2627)
             {
-                switch (e.Number)
-                {
-                    case 2627:
-                        throw new Exception($"The email address '{person.Username}' is already in use.");
-                }
+                throw new RepositoryException($"The email address '{person.Username}' is already in use.");
             }
         }
 

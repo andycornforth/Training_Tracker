@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Repository;
+using Repository.Exceptions;
 
 namespace RepositoryTests
 {
@@ -36,7 +37,7 @@ namespace RepositoryTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "The email address 'test@user.com' is already in use.")]
+        [ExpectedException(typeof(RepositoryException), "The email address 'test@user.com' is already in use.")]
         public void AddDuplicatePersonToPersonTableExpectErrorThrown()
         {
             var person = CreateTestPerson("testperson1000");

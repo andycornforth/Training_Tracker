@@ -4,6 +4,7 @@ using Models;
 using Repository;
 using System.Data.SqlClient;
 using System.Linq;
+using Repository.Exceptions;
 
 namespace RepositoryTests
 {
@@ -59,7 +60,7 @@ namespace RepositoryTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void AUserCanNotHave2LogsWithTheSameName()
         {
             var email = "test@user.com";
@@ -70,6 +71,30 @@ namespace RepositoryTests
 
             _logRepository.AddLog(CreateTestLog(userId, logTitle));
             _logRepository.AddLog(CreateTestLog(userId, logTitle));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void LogWithTitleNullExpectErrorThrown()
+        {
+            var email = "test@user.com";
+
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+
+            _logRepository.AddLog(CreateTestLog(userId, null));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void LogWithTitleEmptyStringExpectErrorThrown()
+        {
+            var email = "test@user.com";
+
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+
+            _logRepository.AddLog(CreateTestLog(userId, string.Empty));
         }
 
         [TestMethod]
