@@ -7,10 +7,25 @@
 <h2>View Logs</h2>
 
 <div>
-    @foreach (var log in Model)
-    {
-    <div>
-        @log.Title
-    </div>
-    }
+    <table>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Date Added
+            </th>
+        </tr>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>
+                    @log.Title
+                </td>
+                <td>
+                    @log.DateAdded
+                </td>
+            </tr>
+        }
+    </table>
 </div>

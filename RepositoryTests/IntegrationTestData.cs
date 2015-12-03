@@ -23,9 +23,6 @@ namespace RepositoryTests
                     return;
                 }
 
-                // Clean up
-                DeleteData();
-
                 // Set up
                 DeleteData();
 
@@ -43,7 +40,8 @@ namespace RepositoryTests
         private void DeleteData()
         {
             var command = GetCommand(@"DELETE FROM dbo.Log 
-                                       DELETE FROM dbo.Person", CommandType.Text);
+                                       DELETE FROM dbo.Person
+                                       DELETE FROM dbo.Exercise", CommandType.Text);
 
             ExecuteNonQuery(command);
         }

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exercise.cs" />
     <Compile Include="Gender.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Person.cs" />
