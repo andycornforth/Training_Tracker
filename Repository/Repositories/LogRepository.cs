@@ -23,7 +23,7 @@ namespace Repository
 
         public void AddLog(Log log)
         {
-            var command = GetCommand("AddLog", System.Data.CommandType.StoredProcedure);
+            var command = GetCommand("AddLog", CommandType.StoredProcedure);
 
             AddParameter(command, "@PersonId", log.PersonId);
             AddParameter(command, "@Title", log.Title);
@@ -34,8 +34,7 @@ namespace Repository
 
         public Log GetLogById(int id)
         {
-            var query = @"SELECT * FROM [Log] WHERE LogId = @LogId";
-            var command = GetCommand(query, CommandType.Text);
+            var command = GetCommand("GetLogById", CommandType.StoredProcedure);
 
             AddParameter(command, "@LogId", id);
 
@@ -44,8 +43,7 @@ namespace Repository
 
         public IList<Log> GetAllLogsByUserId(int userId)
         {
-            var query = @"SELECT * FROM [Log] WHERE PersonId = @PersonId";
-            var command = GetCommand(query, CommandType.Text);
+            var command = GetCommand("GetAllLogsByPersonId", CommandType.StoredProcedure);
 
             AddParameter(command, "@PersonId", userId);
 
