@@ -9,6 +9,7 @@ namespace Business
         {
             container.RegisterType<IPersonRepository, PersonRepository>();
             container.RegisterType<ILogRepository, LogRepository>();
+            container.RegisterType<IExerciseRepository, ExerciseRepository>();
         }
     }
 }
