@@ -27,6 +27,7 @@ namespace TrainingTrackerMVC
             container.RegisterType<ApplicationUserManager>();
             container.RegisterType<IPersonBusiness, PersonBusiness>();
             container.RegisterType<ILogBusiness, LogBusiness>();
+            container.RegisterType<IExerciseBusiness, ExerciseBusiness>();
 
             BusinessUnityConfig.RegisterTypes(container);
 

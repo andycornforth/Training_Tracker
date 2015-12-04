@@ -1,4 +1,4 @@
-﻿using Business.Exceptions;
+﻿using Exceptions;
 using Models;
 using Repository;
 using System;

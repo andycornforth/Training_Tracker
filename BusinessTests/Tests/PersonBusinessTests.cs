@@ -4,6 +4,7 @@ using Repository;
 using Moq;
 using Models;
 using Business;
+using Exceptions;
 
 namespace BusinessTests
 {
@@ -51,7 +52,7 @@ namespace BusinessTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "Date of birth cannot be in the future")]
+        [ExpectedException(typeof(BusinessException), "Date of birth cannot be in the future")]
         public void AddPersonWithDateOfBirthInTheFutureExpectErrorThrown()
         {
             InitializePersonBusiness();

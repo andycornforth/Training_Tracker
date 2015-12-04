@@ -1,4 +1,5 @@
 ﻿using Business;
+using Exceptions;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,16 @@ namespace TrainingTrackerMVC.Controllers
         {
             model.PersonId = Convert.ToInt32(System.Web.HttpContext.Current.Session["UserId"]);
 
-            _logBusiness.AddLogToDatabase(model);
-
-            return View("Index");
+            try
+            {
+                _logBusiness.AddLogToDatabase(model);
+            }
+            catch (Exception e) when (e is BusinessException || e is RepositoryException)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View("AddNewLog", model);
+            }
+            return RedirectToAction("Index", "Exercise");
         }
     }
 }

@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingTrackerMVC", "Train
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingTrackerMVC.Tests", "TrainingTrackerMVC.Tests\TrainingTrackerMVC.Tests.csproj", "{756765D5-FDD1-40D3-8DAB-56F650BF7921}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptions", "Exceptions\Exceptions.csproj", "{DEFE3AF5-C75C-412F-A375-B7124B4AAEFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{756765D5-FDD1-40D3-8DAB-56F650BF7921}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756765D5-FDD1-40D3-8DAB-56F650BF7921}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{756765D5-FDD1-40D3-8DAB-56F650BF7921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFE3AF5-C75C-412F-A375-B7124B4AAEFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFE3AF5-C75C-412F-A375-B7124B4AAEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFE3AF5-C75C-412F-A375-B7124B4AAEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFE3AF5-C75C-412F-A375-B7124B4AAEFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@
 }
 
 <h2>Logs</h2>
-
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @using (Html.BeginForm("AddLog", "Log", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

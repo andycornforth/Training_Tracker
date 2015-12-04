@@ -52,12 +52,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTestData.cs" />
-    <Compile Include="LogRepositoryTests.cs" />
-    <Compile Include="ExerciseRepositoryTests.cs" />
-    <Compile Include="PersonRepositoryTests.cs" />
+    <Compile Include="Tests\LogRepositoryTests.cs" />
+    <Compile Include="Tests\ExerciseRepositoryTests.cs" />
+    <Compile Include="Tests\PersonRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+      <Project>{defe3af5-c75c-412f-a375-b7124b4aaefa}</Project>
+      <Name>Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{69564e12-c3c8-4d7f-9e34-21aa9a355242}</Project>
       <Name>Models</Name>

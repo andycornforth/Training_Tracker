@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Repository;
-using Repository.Exceptions;
+using Exceptions;
 
 namespace RepositoryTests
 {

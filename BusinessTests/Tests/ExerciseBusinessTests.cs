@@ -5,7 +5,7 @@ using Moq;
 using Models;
 using Business;
 using System.Collections.Generic;
-using Business.Exceptions;
+using Exceptions;
 
 namespace BusinessTests
 {

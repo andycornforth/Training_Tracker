@@ -4,7 +4,7 @@ using Models;
 using Repository;
 using System.Data.SqlClient;
 using System.Linq;
-using Repository.Exceptions;
+using Exceptions;
 
 namespace RepositoryTests
 {
