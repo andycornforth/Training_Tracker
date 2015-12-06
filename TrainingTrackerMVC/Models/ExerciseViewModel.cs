@@ -9,6 +9,7 @@ namespace TrainingTrackerMVC.Models
 {
     public class ExerciseViewModel
     {
+        public User User { get; set; }
         public Exercise ExerciseToAdd { get; set; }
         public List<Exercise> AllExercises { get; set; }
     }

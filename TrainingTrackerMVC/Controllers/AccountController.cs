@@ -81,7 +81,7 @@ namespace TrainingTrackerMVC.Controllers
                 case SignInStatus.Success:
                     var user = _personBusiness.GetPersonByUsername(model.Email);
                     System.Web.HttpContext.Current.Session.Add("UserId", user.Id);
-                    return RedirectToAction("Index", "Log");
+                    return RedirectToAction("Index", "Log", new { userId = user.Id});
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

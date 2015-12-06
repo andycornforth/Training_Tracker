@@ -115,8 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTests.cs" />
+    <Compile Include="Controllers\LogControllerTests.cs" />
+    <Compile Include="Controllers\ExerciseControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -128,6 +129,10 @@
     <ProjectReference Include="..\Business\Business.csproj">
       <Project>{1494da5d-0b15-44b2-9ac2-4a412de29cf5}</Project>
       <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+      <Project>{defe3af5-c75c-412f-a375-b7124b4aaefa}</Project>
+      <Name>Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{69564e12-c3c8-4d7f-9e34-21aa9a355242}</Project>

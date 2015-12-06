@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TrainingTrackerMVC.Models;
 
 namespace TrainingTrackerMVC.Controllers
 {
@@ -18,32 +19,28 @@ namespace TrainingTrackerMVC.Controllers
             _logBusiness = logBusiness;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int userId)
         {
-            //if (System.Web.HttpContext.Current.Session["Username"] == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-            return View();
+            return View(new User() { Id = userId });
         }
 
-        public ActionResult ViewAllLogs()
+        [HttpGet]
+        public ActionResult ViewAllLogs(int userId)
         {
-            var userId = Convert.ToInt32(System.Web.HttpContext.Current.Session["UserId"]);
             var allLogs = _logBusiness.GetAllLogsByUserId(userId);
 
             return View(allLogs);
         }
 
-        public ActionResult AddLogView()
+        [HttpGet]
+        public ActionResult AddLogView(int userId)
         {
-            return View("AddNewLog");
+            return View("AddNewLog", new Log() { PersonId = userId });
         }
 
+        [HttpPost]
         public ActionResult AddLog(Log model)
         {
-            model.PersonId = Convert.ToInt32(System.Web.HttpContext.Current.Session["UserId"]);
-
             try
             {
                 _logBusiness.AddLogToDatabase(model);
@@ -53,7 +50,7 @@ namespace TrainingTrackerMVC.Controllers
                 ModelState.AddModelError("", e.Message);
                 return View("AddNewLog", model);
             }
-            return RedirectToAction("Index", "Exercise");
+            return RedirectToAction("Index", "Exercise", new { userId = model.PersonId});
         }
     }
 }

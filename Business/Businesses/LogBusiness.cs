@@ -11,7 +11,7 @@ namespace Business
 {
     public interface ILogBusiness
     {
-        void AddLogToDatabase(Log person);
+        void AddLogToDatabase(Log log);
         IList<Log> GetAllLogsByUserId(int userId);
     }
 
