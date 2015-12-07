@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTestData.cs" />
+    <Compile Include="Tests\SetRepositoryTests.cs" />
     <Compile Include="Tests\LogRepositoryTests.cs" />
     <Compile Include="Tests\ExerciseRepositoryTests.cs" />
     <Compile Include="Tests\PersonRepositoryTests.cs" />

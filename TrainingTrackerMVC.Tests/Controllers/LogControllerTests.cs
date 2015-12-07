@@ -104,8 +104,9 @@ namespace TrainingTrackerMVC.Tests.Controllers
 
             var actionResult = result as RedirectToRouteResult;
 
-            Assert.AreEqual("Index", actionResult.RouteValues.Values.ElementAt(0));
-            Assert.AreEqual("Exercise", actionResult.RouteValues.Values.ElementAt(1));
+            Assert.AreEqual(1, actionResult.RouteValues.Values.ElementAt(0));
+            Assert.AreEqual("Index", actionResult.RouteValues.Values.ElementAt(1));
+            Assert.AreEqual("Exercise", actionResult.RouteValues.Values.ElementAt(2));
 
         }
 

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AddLog]
-	@PersonId nvarchar(50),
+	@PersonId INT,
 	@Title nvarchar(50),
 	@Date datetime
 

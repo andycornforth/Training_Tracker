@@ -39,7 +39,8 @@ namespace RepositoryTests
 
         private void DeleteData()
         {
-            var command = GetCommand(@"DELETE FROM dbo.Log 
+            var command = GetCommand(@"DELETE FROM dbo.[Set]
+                                       DELETE FROM dbo.Log 
                                        DELETE FROM dbo.Person
                                        DELETE FROM dbo.Exercise", CommandType.Text);
 
