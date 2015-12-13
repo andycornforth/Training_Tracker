@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Tests\EncryptionTests.cs" />
+    <Compile Include="Tests\SetBusinessTests.cs" />
     <Compile Include="Tests\LogBusinessTests.cs" />
     <Compile Include="Tests\ExerciseBusinessTests.cs" />
     <Compile Include="Tests\PersonBusinessTests.cs" />

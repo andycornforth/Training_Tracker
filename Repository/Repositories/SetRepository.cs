@@ -30,7 +30,14 @@ namespace Repository
             AddParameter(command, "@Reps", set.Reps);
             AddParameter(command, "@Position", set.PositionInLog);
 
-            ExecuteNonQuery(command);
+            try
+            {
+                ExecuteNonQuery(command);
+            }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                throw new RepositoryException("A log cannot have 2 sets in the same position");
+            }
         }
 
         public IList<Set> GetSetsByLogId(int logId)

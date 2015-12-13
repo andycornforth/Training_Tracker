@@ -52,20 +52,9 @@ namespace RepositoryTests
         [TestMethod]
         public void AddSetExpectSetAdded()
         {
-            var person = CreateTestPerson("andycornforth");
-            _personRepository.AddPerson(person);
-            person = _personRepository.GetPersonByUsername("andycornforth");
-
-            var log = new Log()
-            {
-                PersonId = person.Id,
-                Title = "Test Log"
-            };
-            _logRepository.AddLog(log);
-            log = _logRepository.GetAllLogsByUserId(person.Id).FirstOrDefault();
-
-            _exerciseRepository.AddExercise("Squat");
-            var exercise = _exerciseRepository.GetAllExercises().FirstOrDefault();
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
 
             var set = new Set()
             {
@@ -88,6 +77,69 @@ namespace RepositoryTests
             Assert.AreEqual(82.5, set.Weight);
             Assert.AreEqual(5, set.Reps);
             Assert.AreEqual(1, set.PositionInLog);
+        }
+
+        [TestMethod]
+        public void Add2SetsToLogWithDifferentPositionInLogsExpectSetsAdded()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+
+            set.PositionInLog = 2;
+            _setRepository.AddSet(set);
+
+            var sets = _setRepository.GetSetsByLogId(log.Id);
+
+            Assert.AreEqual(2, sets.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void Add2SetsToLogWithTheSamePositionInLogsExpectRepositoryException()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+            _setRepository.AddSet(set);
+        }
+
+        private void CreateTestLogAndExercise(out Log log, out Exercise exercise)
+        {
+            var person = CreateTestPerson("andycornforth");
+            _personRepository.AddPerson(person);
+            person = _personRepository.GetPersonByUsername("andycornforth");
+
+            log = new Log()
+            {
+                PersonId = person.Id,
+                Title = "Test Log"
+            };
+            _logRepository.AddLog(log);
+            log = _logRepository.GetAllLogsByUserId(person.Id).FirstOrDefault();
+
+            _exerciseRepository.AddExercise("Squat");
+            exercise = _exerciseRepository.GetAllExercises().FirstOrDefault();
         }
     }
 }
