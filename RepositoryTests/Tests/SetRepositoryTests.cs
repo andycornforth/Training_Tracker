@@ -124,6 +124,59 @@ namespace RepositoryTests
             _setRepository.AddSet(set);
         }
 
+
+        [TestMethod]
+        public void GetLatestSetFromLogExpectCorrectDataReturned()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+
+            set.PositionInLog = 2;
+            _setRepository.AddSet(set);
+
+            var userId = _personRepository.GetPersonByUsername("andycornforth").Id;
+            var logId = _logRepository.GetAllLogsByUserId(userId).FirstOrDefault().Id;
+
+            var newSet = _setRepository.GetLatestSetForLog(logId);
+
+            Assert.AreEqual(2, newSet.PositionInLog);
+        }
+
+        [TestMethod]
+        public void GetLatestSetFromLogWhenNoneAddedExpectNullReturned()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+
+            var userId = _personRepository.GetPersonByUsername("andycornforth").Id;
+            var logId = _logRepository.GetAllLogsByUserId(userId).FirstOrDefault().Id;
+
+            var newSet = _setRepository.GetLatestSetForLog(logId);
+
+            Assert.IsNull(newSet);
+        }
+
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)
         {
             var person = CreateTestPerson("andycornforth");

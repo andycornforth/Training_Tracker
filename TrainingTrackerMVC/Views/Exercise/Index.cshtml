@@ -1,33 +1,31 @@
 ﻿@model TrainingTrackerMVC.Models.ExerciseViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Exercises";
 }
 
-<h2>Exercises</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("AddExercise", "Exercise", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.User.Id)
+    @Html.HiddenFor(m => m.Log.Id)
     @Html.LabelFor(m => m.ExerciseToAdd.Title)
     @Html.EditorFor(m => m.ExerciseToAdd.Title)
-    <input type="submit" value="Go"/>
+    <input type="submit" value="Go" />
 }
-@using (Html.BeginForm("AddExercise", "Exercise", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.User.Id)
-    <table>
-        <tr>
-            <th>
-                Exercises
-            </th>
-        </tr>
-        <tr>
-            @foreach (var exercise in Model.AllExercises)
+
+@Html.HiddenFor(m => m.Log.Id)
+<table>
+    <tr>
+        <th>
+            Exercises
+        </th>
+    </tr>
+    <tr>
+        @foreach (var exercise in Model.AllExercises)
             {
-                <td>
-                    <input value="@exercise.Title" type="submit" />
-                </td>
-            }
-        </tr>
-    </table>
-}
+            <td>
+                @Html.ActionLink(exercise.Title, "GetExercise", new { exerciseId = exercise.Id, logId = Model.Log.Id })
+            </td>
+        }
+    </tr>
+</table>

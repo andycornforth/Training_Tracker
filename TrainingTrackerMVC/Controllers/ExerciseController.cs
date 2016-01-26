@@ -18,13 +18,13 @@ namespace TrainingTrackerMVC.Controllers
             _exerciseBusiness = exerciseBusiness;
         }
 
-        public ActionResult Index(int userId)
+        public ActionResult Index(int logId)
         {
             var model = new ExerciseViewModel()
             {
-                User = new User()
+                Log = new Log()
                 {
-                    Id = userId
+                    Id = logId
                 },
                 AllExercises = _exerciseBusiness.GetAllExercises().ToList()
             };
@@ -34,10 +34,14 @@ namespace TrainingTrackerMVC.Controllers
 
         public ActionResult AddExercise(ExerciseViewModel model)
         {
-            var exercise = _exerciseBusiness.AddExercise(model.ExerciseToAdd.Title);
+            var exercise = _exerciseBusiness.GetExercise(model.ExerciseToAdd.Title);
 
-            //Redirect to action -> Choose weight -> choose reps -> choose sets (whether the same or different)
-            return Index(model.User.Id);
+            return RedirectToAction("Index", "Set", new { exerciseId = exercise.Id, logId = model.Log.Id });
+        }
+
+        public ActionResult GetExercise(int exerciseId, int logId)
+        {
+            return RedirectToAction("Index", "Set", new { exerciseId = exerciseId, logId = logId });
         }
     }
 }

@@ -6,6 +6,7 @@ using Models;
 using Business;
 using System.Collections.Generic;
 using Exceptions;
+using System.Linq;
 
 namespace BusinessTests
 {
@@ -19,10 +20,6 @@ namespace BusinessTests
         public void SetUp()
         {
             _mockLogRepository = new Mock<ILogRepository>();
-        }
-
-        private void InitializeLogBusiness()
-        {
             _logBusiness = new LogBusiness(_mockLogRepository.Object);
         }
 
@@ -30,8 +27,6 @@ namespace BusinessTests
         public void GetAllLogsByUsernameFromDatabase()
         {
             _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
-
-            InitializeLogBusiness();
 
             var userId = 1;
 
@@ -45,8 +40,6 @@ namespace BusinessTests
         {
             _mockLogRepository.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(GetListOfLogs());
 
-            InitializeLogBusiness();
-
             var logs = _logBusiness.GetAllLogsByUserId(0);
 
             Assert.IsNull(logs);
@@ -55,18 +48,25 @@ namespace BusinessTests
         [TestMethod]
         public void AddLogExpectNoError()
         {
-            InitializeLogBusiness();
-
-            _logBusiness.AddLogToDatabase(GetTestLog(1, "testlog"));
+            _mockLogRepository.Setup(x => x.AddLog(It.IsAny<Log>())).Returns(1);
+            var id = _logBusiness.AddLogToDatabase(GetTestLog(1, "testlog"));
+            Assert.AreEqual(1, id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(BusinessException))]
         public void AddNullLogExpectErrorThrown()
         {
-            InitializeLogBusiness();
-
             _logBusiness.AddLogToDatabase(null);
+        }
+
+        [TestMethod]
+        public void GetLogByIdExpectNoErrorThrown()
+        {
+            _mockLogRepository.Setup(x => x.GetLogById(It.IsAny<int>())).Returns(GetListOfLogs().FirstOrDefault());
+            var log = _logBusiness.GetLogById(1);
+
+            Assert.IsNotNull(log);
         }
 
         private IList<Log> GetListOfLogs()

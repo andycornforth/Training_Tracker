@@ -13,6 +13,7 @@ namespace Business
     {
         void AddSetToLog(Set set);
         IList<Set> GetSetsByLogId(int logId);
+        Set GetLatestSetForLog(int LogId);
     }
 
     public class SetBusiness : ISetBusiness
@@ -39,5 +40,7 @@ namespace Business
         }
 
         public IList<Set> GetSetsByLogId(int logId) => _setRepository.GetSetsByLogId(logId);
+
+        public Set GetLatestSetForLog(int LogId) => _setRepository.GetLatestSetForLog(LogId);
     }
 }

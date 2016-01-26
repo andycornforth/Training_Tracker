@@ -123,10 +123,6 @@ namespace Repository
                 command.Connection.Open();
                 return (int) command.ExecuteScalar();
             }
-            catch (SqlException e)
-            {
-                throw new Exception("Repository query execution error.", e);
-            }
             finally
             {
                 CloseConnection(command);

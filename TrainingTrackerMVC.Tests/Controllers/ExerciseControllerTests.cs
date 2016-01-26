@@ -64,9 +64,9 @@ namespace TrainingTrackerMVC.Tests.Controllers
 
             var model = new ExerciseViewModel()
             {
-                User = new User()
+                Log = new Log()
                 {
-                    Id = _userId
+                    Id = 1
                 },
                 ExerciseToAdd = new Exercise()
                 {

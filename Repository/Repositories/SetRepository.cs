@@ -1,5 +1,6 @@
 ﻿using Exceptions;
 using Models;
+using Repository.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,7 @@ namespace Repository
     {
         void AddSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
+        Set GetLatestSetForLog(int logId);
     }
 
     public class SetRepository : BaseSqlRepository, ISetRepository
@@ -49,6 +51,15 @@ namespace Repository
             return GetEntitiesFromDatabase<Set>(command);
         }
 
+        public Set GetLatestSetForLog(int logId)
+        {
+            var command = GetCommand("GetLatestSetForLog", CommandType.StoredProcedure);
+
+            AddParameter(command, "@LogId", logId);
+
+            return GetEntitiesFromDatabase<Set>(command).FirstOrDefault();
+        }
+
         protected override object MapRowToEntity(IDataReader reader)
         {
             return new Set()
@@ -57,12 +68,12 @@ namespace Repository
                 Log = new Log()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("LogId")),
-                    PersonId = reader.GetInt32(reader.GetOrdinal("PersonId"))
+                    PersonId = reader.HasColumn("PersonId") ? reader.GetInt32(reader.GetOrdinal("PersonId")) : 0
                 },
                 Exercise = new Exercise()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("ExerciseId")),
-                    Title = reader.GetString(reader.GetOrdinal("Title"))
+                    Title = reader.HasColumn("Title") ? reader.GetString(reader.GetOrdinal("Title")) : null
                 },
                 Weight = reader.GetDouble(reader.GetOrdinal("Weight")),
                 Reps = reader.GetInt32(reader.GetOrdinal("Reps")),

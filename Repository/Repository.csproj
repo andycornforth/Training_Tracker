@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BaseSqlRepository.cs" />
     <Compile Include="ConnectionStringProvider.cs" />
+    <Compile Include="Helpers\DataRecordExtensions.cs" />
     <Compile Include="Repositories\ExerciseRepository.cs" />
     <Compile Include="Repositories\SetRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />

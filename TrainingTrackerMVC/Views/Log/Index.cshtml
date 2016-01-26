@@ -6,14 +6,14 @@
 <h2>Index</h2>
 
 @Html.HiddenFor(m => m.Id)
-@using (Html.BeginForm("ViewAllLogs", "Log", new { userId = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("ViewAllLogs", "Log", new { userId = Model.Id }, FormMethod.Get))
 {
     <div>
         <input type="submit" value="View your logs" />
     </div>
 }
 
-@using (Html.BeginForm("AddLogView", "Log", new { userId = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("AddLogView", "Log", new { userId = Model.Id }, FormMethod.Get))
 {
     <div>
         <input type="submit" value="Create a new log" />

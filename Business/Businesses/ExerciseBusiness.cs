@@ -12,7 +12,7 @@ namespace Business
     public interface IExerciseBusiness
     {
         IList<Exercise> GetAllExercises();
-        Exercise AddExercise(string title);
+        Exercise GetExercise(string title);
         Exercise GetExerciseById(int id);
     }
 
@@ -27,7 +27,7 @@ namespace Business
 
         public IList<Exercise> GetAllExercises() => _exerciseRepository.GetAllExercises();
 
-        public Exercise AddExercise(string title)
+        public Exercise GetExercise(string title)
         {
             if (title == null || title.Equals(string.Empty))
                 throw new BusinessException("Cannot create an exercise without a title");

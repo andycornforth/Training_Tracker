@@ -10,7 +10,7 @@ namespace Repository
 {
     public interface ILogRepository
     {
-        void AddLog(Log log);
+        int AddLog(Log log);
         Log GetLogById(int id);
         IList<Log> GetAllLogsByUserId(int userId);
     }
@@ -21,7 +21,7 @@ namespace Repository
         {
         }
 
-        public void AddLog(Log log)
+        public int AddLog(Log log)
         {
             if (log?.Title == null || log.Title.Equals(string.Empty))
                 throw new RepositoryException("A log must have a title supplied");
@@ -32,8 +32,9 @@ namespace Repository
             AddParameter(command, "@Title", log.Title);
             AddParameter(command, "@Date", DateTime.Now);
 
-            try {
-                ExecuteNonQueryChecked(command);
+            try
+            {
+                return ExecuteInt32Scalar(command);
             }
             catch (SqlException e) when (e.Number == 2627)//Unique key constraint
             {

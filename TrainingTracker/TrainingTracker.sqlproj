@@ -76,6 +76,7 @@
     <Build Include="Tables\Set.sql" />
     <Build Include="Stored Procedures\AddSet.sql" />
     <Build Include="Stored Procedures\GetSetsByLogId.sql" />
+    <Build Include="Stored Procedures\GetLatestSetForLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TrainingTracker.refactorlog" />

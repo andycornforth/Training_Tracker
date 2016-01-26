@@ -41,7 +41,9 @@ namespace RepositoryTests
             AddPersonToDatabase(email);
             var userId = _personRepository.GetPersonByUsername(email).Id;
 
-            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            var id = _logRepository.AddLog(CreateTestLog(userId, logTitle));
+
+            Assert.AreNotEqual(0, id);
         }
 
         [TestMethod]

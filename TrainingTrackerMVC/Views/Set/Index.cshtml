@@ -1,0 +1,26 @@
+﻿@model Models.Set
+@{
+    ViewBag.Title = "Set";
+}
+
+<h2>Set @Model.PositionInLog</h2>
+
+@Html.ActionLink("Return to log", "ViewLog", "Log", new { logId = Model.Log.Id}, new { })
+
+@using (Html.BeginForm("Index", "Set", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Log.Id)
+
+    <h3>@Model.Exercise.Title</h3>
+    @Html.HiddenFor(m => m.Exercise.Id)
+
+    @Html.LabelFor(m => m.Weight)
+    @Html.EditorFor(m => m.Weight)
+
+    @Html.LabelFor(m => m.Reps)
+    @Html.EditorFor(m => m.Reps)
+
+    @Html.HiddenFor(m => m.PositionInLog)
+
+    <input type="submit" value="Go" />
+}

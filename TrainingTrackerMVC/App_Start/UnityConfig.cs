@@ -28,6 +28,7 @@ namespace TrainingTrackerMVC
             container.RegisterType<IPersonBusiness, PersonBusiness>();
             container.RegisterType<ILogBusiness, LogBusiness>();
             container.RegisterType<IExerciseBusiness, ExerciseBusiness>();
+            container.RegisterType<ISetBusiness, SetBusiness>();
 
             BusinessUnityConfig.RegisterTypes(container);
 

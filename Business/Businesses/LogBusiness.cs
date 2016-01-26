@@ -11,8 +11,9 @@ namespace Business
 {
     public interface ILogBusiness
     {
-        void AddLogToDatabase(Log log);
+        int AddLogToDatabase(Log log);
         IList<Log> GetAllLogsByUserId(int userId);
+        Log GetLogById(int id);
     }
 
     public class LogBusiness : ILogBusiness
@@ -24,12 +25,12 @@ namespace Business
             _logRepository = logRepository;
         }
 
-        public void AddLogToDatabase(Log log)
+        public int AddLogToDatabase(Log log)
         {
             if (log == null)
                 throw new BusinessException("Log cannot be null");
 
-            _logRepository.AddLog(log);
+            return _logRepository.AddLog(log);
         }
 
         public IList<Log> GetAllLogsByUserId(int userId)
@@ -39,5 +40,7 @@ namespace Business
 
             return _logRepository.GetAllLogsByUserId(userId);
         }
+
+        public Log GetLogById(int id) => _logRepository.GetLogById(id);
     }
 }

@@ -6,6 +6,7 @@ using Models;
 using Business;
 using System.Collections.Generic;
 using Exceptions;
+using System.Linq;
 
 namespace BusinessTests
 {
@@ -105,6 +106,16 @@ namespace BusinessTests
 
             Assert.IsNotNull(sets);
             Assert.AreEqual(2, sets.Count);
+        }
+
+        [TestMethod]
+        public void GetLatestSetsForLogExpectLogReturned()
+        {
+            _mockSetRepository.Setup(x => x.GetLatestSetForLog(It.IsAny<int>())).Returns(_sets.FirstOrDefault());
+
+            var set = _setBusiness.GetLatestSetForLog(1);
+
+            Assert.AreEqual(_sets.FirstOrDefault(), set);
         }
     }
 }

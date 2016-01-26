@@ -53,7 +53,7 @@ namespace BusinessTests
 
             InitializeExerciseBusiness();
 
-            var exercise = _exersiceBusiness.AddExercise("Squat");
+            var exercise = _exersiceBusiness.GetExercise("Squat");
 
             Assert.IsNotNull(exercise);
             Assert.AreEqual(1, exercise.Id);
@@ -67,7 +67,7 @@ namespace BusinessTests
 
             InitializeExerciseBusiness();
 
-            var exercise = _exersiceBusiness.AddExercise("");
+            var exercise = _exersiceBusiness.GetExercise("");
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace BusinessTests
 
             InitializeExerciseBusiness();
 
-            var exercise = _exersiceBusiness.AddExercise(null);
+            var exercise = _exersiceBusiness.GetExercise(null);
         }
 
         [TestMethod]

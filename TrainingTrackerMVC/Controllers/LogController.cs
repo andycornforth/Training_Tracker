@@ -13,10 +13,12 @@ namespace TrainingTrackerMVC.Controllers
     public class LogController : Controller
     {
         private ILogBusiness _logBusiness;
+        private ISetBusiness _setBusiness;
 
-        public LogController(ILogBusiness logBusiness)
+        public LogController(ILogBusiness logBusiness, ISetBusiness setBusiness)
         {
             _logBusiness = logBusiness;
+            _setBusiness = setBusiness;
         }
 
         public ActionResult Index(int userId)
@@ -33,24 +35,39 @@ namespace TrainingTrackerMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddLogView(int userId)
-        {
-            return View("AddNewLog", new Log() { PersonId = userId });
-        }
+        public ActionResult AddLogView(int userId) => View("AddNewLog", new Log() { PersonId = userId });
 
         [HttpPost]
         public ActionResult AddLog(Log model)
         {
             try
             {
-                _logBusiness.AddLogToDatabase(model);
+                var id = _logBusiness.AddLogToDatabase(model);
+                return RedirectToAction("Index", "Exercise", new { logId = id });
             }
             catch (Exception e) when (e is BusinessException || e is RepositoryException)
             {
                 ModelState.AddModelError("", e.Message);
                 return View("AddNewLog", model);
             }
-            return RedirectToAction("Index", "Exercise", new { userId = model.PersonId});
+        }
+
+        [HttpGet]
+        public ActionResult AddToLog(int logId) => RedirectToAction("Index", "Exercise", new { logId = logId });
+
+        [HttpGet]
+        public ActionResult ViewLog(int logId)
+        {
+            var log = _logBusiness.GetLogById(logId);
+            var sets = _setBusiness.GetSetsByLogId(logId).ToList();
+
+            var model = new LogViewModel()
+            {
+                Log = log,
+                Sets = sets
+            };
+
+            return View(model);
         }
     }
 }

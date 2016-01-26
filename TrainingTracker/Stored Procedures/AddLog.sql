@@ -6,3 +6,4 @@
 AS
 	
 	Insert into [Log] values (@PersonId, @Title, @Date)
+	SELECT CAST(SCOPE_IDENTITY() AS INT)

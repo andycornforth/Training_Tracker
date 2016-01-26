@@ -1,0 +1,43 @@
+﻿@model TrainingTrackerMVC.Models.LogViewModel
+@{
+    ViewBag.Title = "ViewLog";
+}
+
+@Html.HiddenFor(m => m.Log.Id)
+<h2>@Model.Log.Title</h2>
+<h3>@Model.Log.DateAdded</h3>
+
+<table>
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Exercise
+        </th>
+        <th>
+            Weight
+        </th>
+        <th>
+            Reps
+        </th>
+    </tr>
+    @foreach (var set in Model.Sets)
+    {
+        <tr>
+            <td>
+                @set.PositionInLog
+            </td>
+            <td>
+                @set.Exercise.Title
+            </td>
+            <td>
+                @set.Weight
+            </td>
+            <td>
+                @set.Reps
+            </td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Add Entry", "AddToLog", new { logId = Model.Log.Id })

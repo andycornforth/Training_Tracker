@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    @log.Title
+                    @Html.ActionLink(log.Title, "ViewLog", new { logId = log.Id })
                 </td>
                 <td>
                     @log.DateAdded
