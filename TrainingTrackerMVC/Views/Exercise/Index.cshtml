@@ -5,6 +5,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+@Html.ActionLink("<- Back", "ViewLog", "Log", new { logId = Model.Log.Id }, new { })
+
 @using (Html.BeginForm("AddExercise", "Exercise", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Log.Id)

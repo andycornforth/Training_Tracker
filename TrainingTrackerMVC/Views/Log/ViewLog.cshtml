@@ -7,6 +7,8 @@
 <h2>@Model.Log.Title</h2>
 <h3>@Model.Log.DateAdded</h3>
 
+@Html.ActionLink("<- Back","ViewAllLogs", new { userId = Model.Log.PersonId })
+
 <table>
     <tr>
         <th>
