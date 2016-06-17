@@ -18,6 +18,7 @@ namespace TrainingTrackerMVC.Tests.Controllers
     public class LogControllerTest
     {
         private Mock<ILogBusiness> _mockLogBusiness;
+        private Mock<ISetBusiness> _mockSetBusiness;
         private LogController _logController;
         private int _userId = 1;
         
@@ -25,6 +26,8 @@ namespace TrainingTrackerMVC.Tests.Controllers
         public void SetUp()
         {
             _mockLogBusiness = new Mock<ILogBusiness>();
+            _mockSetBusiness = new Mock<ISetBusiness>();
+            InitializeController();
         }
 
         private IList<Log> _logs = new List<Log>()
@@ -34,14 +37,12 @@ namespace TrainingTrackerMVC.Tests.Controllers
 
         private void InitializeController()
         {
-            _logController = new LogController(_mockLogBusiness.Object);
+            _logController = new LogController(_mockLogBusiness.Object, _mockSetBusiness.Object);
         }
 
         [TestMethod]
         public void ExerciseIndexReturnsValidViewResult()
         {
-            InitializeController();
-
             var result = _logController.Index(_userId);
 
             Assert.IsNotNull(result);
@@ -57,8 +58,6 @@ namespace TrainingTrackerMVC.Tests.Controllers
         {
             _mockLogBusiness.Setup(x => x.GetAllLogsByUserId(It.IsAny<int>())).Returns(_logs);
 
-            InitializeController();
-
             var result = _logController.ViewAllLogs(_userId);
 
             Assert.IsNotNull(result);
@@ -73,8 +72,6 @@ namespace TrainingTrackerMVC.Tests.Controllers
         [TestMethod]
         public void AddLogViewReturnsValidViewResultWithModel()
         {
-            InitializeController();
-
             var result = _logController.AddLogView(_userId);
 
             Assert.IsNotNull(result);
@@ -89,7 +86,7 @@ namespace TrainingTrackerMVC.Tests.Controllers
         [TestMethod]
         public void AddLogPostReturnsExerciseViewResult()
         {
-            InitializeController();
+            _mockLogBusiness.Setup(x => x.AddLogToDatabase(It.IsAny<Log>())).Returns(1);
 
             var model = new Log()
             {
@@ -114,8 +111,6 @@ namespace TrainingTrackerMVC.Tests.Controllers
         public void AddLogPostWithDuplicateLogReturnsViewResultWithError()
         {
             _mockLogBusiness.Setup(x => x.AddLogToDatabase(It.IsAny<Log>())).Throws(new RepositoryException("Mock Error"));
-
-            InitializeController();
 
             var model = new Log()
             {

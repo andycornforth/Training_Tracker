@@ -24,6 +24,7 @@ namespace TrainingTrackerMVC.Tests.Controllers
         public void SetUp()
         {
             _mockExerciseBusiness = new Mock<IExerciseBusiness>();
+            InitializeController();
         }
 
         private IList<Exercise> _exercises = new List<Exercise>()
@@ -42,8 +43,6 @@ namespace TrainingTrackerMVC.Tests.Controllers
         {
             _mockExerciseBusiness.Setup(x => x.GetAllExercises()).Returns(_exercises);
 
-            InitializeController();
-
             var result = _exerciseController.Index(_userId);
 
             Assert.IsNotNull(result);
@@ -58,9 +57,7 @@ namespace TrainingTrackerMVC.Tests.Controllers
         [TestMethod]
         public void AddExerciseReturnsIndexViewResult()
         {
-            _mockExerciseBusiness.Setup(x => x.GetAllExercises()).Returns(_exercises);
-
-            InitializeController();
+            _mockExerciseBusiness.Setup(x => x.GetExercise(It.IsAny<string>())).Returns(_exercises.First());
 
             var model = new ExerciseViewModel()
             {
@@ -77,12 +74,11 @@ namespace TrainingTrackerMVC.Tests.Controllers
             var result = _exerciseController.AddExercise(model);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
 
-            var actionResult = result as ViewResult;
+            var redirectResult = result as RedirectToRouteResult;
 
-            Assert.IsNotNull(actionResult.Model);
-            Assert.AreEqual("Index", actionResult.ViewName);
+            Assert.IsNotNull(redirectResult.RouteValues);
         }
     }
 }
