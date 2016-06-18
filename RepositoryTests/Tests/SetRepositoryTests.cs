@@ -177,6 +177,47 @@ namespace RepositoryTests
             Assert.IsNull(newSet);
         }
 
+        [TestMethod]
+        public void EditSetExpectSetEdited()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+
+            set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
+
+            Assert.AreEqual(82.5, set.Weight);
+
+            _exerciseRepository.AddExercise("Overhead Press");
+            var newExercise = _exerciseRepository.GetAllExercises().Where(x => x.Id != exercise.Id).FirstOrDefault();
+
+            var setId = set.Id;
+            var exerciseId = newExercise.Id;
+            var weight = 60;
+            var reps = 10;
+            var positionInLog = 2;
+
+
+            _setRepository.UpdateSet(setId, exerciseId, weight, reps, positionInLog);
+
+            set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
+
+            Assert.AreEqual(exerciseId, set.Exercise.Id);
+            Assert.AreEqual(weight, set.Weight);
+            Assert.AreEqual(reps, set.Reps);
+            Assert.AreEqual(positionInLog, set.PositionInLog);
+        }
+
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)
         {
             var person = CreateTestPerson("andycornforth");
