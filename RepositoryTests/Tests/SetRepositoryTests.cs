@@ -201,21 +201,23 @@ namespace RepositoryTests
             _exerciseRepository.AddExercise("Overhead Press");
             var newExercise = _exerciseRepository.GetAllExercises().Where(x => x.Id != exercise.Id).FirstOrDefault();
 
-            var setId = set.Id;
-            var exerciseId = newExercise.Id;
-            var weight = 60;
-            var reps = 10;
-            var positionInLog = 2;
+            set = new Set()
+            {
+                Id = set.Id,
+                Exercise = new Exercise() { Id = newExercise.Id },
+                Weight = 60,
+                Reps = 10,
+                PositionInLog = 2
+            };
 
-
-            _setRepository.UpdateSet(setId, exerciseId, weight, reps, positionInLog);
+            _setRepository.UpdateSet(set);
 
             set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
 
-            Assert.AreEqual(exerciseId, set.Exercise.Id);
-            Assert.AreEqual(weight, set.Weight);
-            Assert.AreEqual(reps, set.Reps);
-            Assert.AreEqual(positionInLog, set.PositionInLog);
+            Assert.AreEqual(newExercise.Id, set.Exercise.Id);
+            Assert.AreEqual(60, set.Weight);
+            Assert.AreEqual(10, set.Reps);
+            Assert.AreEqual(2, set.PositionInLog);
         }
 
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)

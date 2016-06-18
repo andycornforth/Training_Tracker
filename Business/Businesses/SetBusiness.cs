@@ -12,8 +12,10 @@ namespace Business
     public interface ISetBusiness
     {
         void AddSetToLog(Set set);
+        void UpdateSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
         Set GetLatestSetForLog(int LogId);
+
     }
 
     public class SetBusiness : ISetBusiness
@@ -27,6 +29,18 @@ namespace Business
 
         public void AddSetToLog(Set set)
         {
+            SetValidation(set);
+            _setRepository.AddSet(set);
+        }
+
+        public void UpdateSet(Set set)
+        {
+            SetValidation(set);
+            _setRepository.UpdateSet(set);
+        }
+
+        private static void SetValidation(Set set)
+        {
             if (set == null)
                 throw new BusinessException("Set not specified");
             if (set.Log == null)
@@ -35,8 +49,6 @@ namespace Business
                 throw new BusinessException("The set is not associated to an exercise");
             if (set.PositionInLog < 1)
                 throw new BusinessException("The sets position in the log must be greater than 0");
-
-            _setRepository.AddSet(set);
         }
 
         public IList<Set> GetSetsByLogId(int logId) => _setRepository.GetSetsByLogId(logId);

@@ -12,7 +12,7 @@ namespace Repository
     public interface ISetRepository
     {
         void AddSet(Set set);
-        void UpdateSet(int setId, int exerciseId, int weight, int reps, int positionInLog);
+        void UpdateSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
         Set GetLatestSetForLog(int logId);
     }
@@ -43,15 +43,15 @@ namespace Repository
             }
         }
 
-        public void UpdateSet(int setId, int exerciseId, int weight, int reps, int positionInLog)
+        public void UpdateSet(Set set)
         {
             var command = GetCommand("UpdateSet", CommandType.StoredProcedure);
 
-            AddParameter(command, "@SetId", setId);
-            AddParameter(command, "@ExerciseId", exerciseId);
-            AddParameter(command, "@Weight", weight);
-            AddParameter(command, "@Reps", reps);
-            AddParameter(command, "@Position", positionInLog);
+            AddParameter(command, "@SetId", set.Id);
+            AddParameter(command, "@ExerciseId", set.Exercise.Id);
+            AddParameter(command, "@Weight", set.Weight);
+            AddParameter(command, "@Reps", set.Reps);
+            AddParameter(command, "@Position", set.PositionInLog);
 
             try
             {

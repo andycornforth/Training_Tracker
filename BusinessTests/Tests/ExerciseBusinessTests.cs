@@ -19,6 +19,7 @@ namespace BusinessTests
         public void SetUp()
         {
             _mockExerciseRepository = new Mock<IExerciseRepository>();
+            _exersiceBusiness = new ExerciseBusiness(_mockExerciseRepository.Object);
         }
 
         private IList<Exercise> _exercises = new List<Exercise>()
@@ -29,17 +30,10 @@ namespace BusinessTests
 
         private Exercise _exercise = new Exercise() { Id = 1, Title = "Squat" };
 
-        private void InitializeExerciseBusiness()
-        {
-            _exersiceBusiness = new ExerciseBusiness(_mockExerciseRepository.Object);
-        }
-
         [TestMethod]
         public void GetAllExercieseReturnsAllExercises()
         {
             _mockExerciseRepository.Setup(x => x.GetAllExercises()).Returns(_exercises);
-
-            InitializeExerciseBusiness();
 
             var exercises = _exersiceBusiness.GetAllExercises();
 
@@ -50,8 +44,6 @@ namespace BusinessTests
         public void AddExerciseExpectExerciseReturned()
         {
             _mockExerciseRepository.Setup(x => x.AddExercise(It.IsAny<string>())).Returns(_exercise);
-
-            InitializeExerciseBusiness();
 
             var exercise = _exersiceBusiness.GetExercise("Squat");
 
@@ -65,8 +57,6 @@ namespace BusinessTests
         {
             _mockExerciseRepository.Setup(x => x.AddExercise(It.IsAny<string>())).Returns(_exercise);
 
-            InitializeExerciseBusiness();
-
             var exercise = _exersiceBusiness.GetExercise("");
         }
 
@@ -76,8 +66,6 @@ namespace BusinessTests
         {
             _mockExerciseRepository.Setup(x => x.AddExercise(It.IsAny<string>())).Returns(_exercise);
 
-            InitializeExerciseBusiness();
-
             var exercise = _exersiceBusiness.GetExercise(null);
         }
 
@@ -85,8 +73,6 @@ namespace BusinessTests
         public void GetExerciseByIdDoesNotThrowError()
         {
             _mockExerciseRepository.Setup(x => x.GetExerciseById(It.IsAny<int>())).Returns(_exercise);
-
-            InitializeExerciseBusiness();
 
             var exercise = _exersiceBusiness.GetExerciseById(1);
         }
@@ -96,8 +82,6 @@ namespace BusinessTests
         public void GetExerciseByIdThrowsErrorWhenNullIsReturnedFromRepository()
         {
             _mockExerciseRepository.Setup(x => x.GetExerciseById(It.IsAny<int>())).Returns((Exercise)null);
-
-            InitializeExerciseBusiness();
 
             var exercise = _exersiceBusiness.GetExerciseById(1);
         }
