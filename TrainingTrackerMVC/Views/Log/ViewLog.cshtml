@@ -40,7 +40,8 @@
                 @set.Reps
             </td>
             <td>
-                @Html.ActionLink("Edit", "AddToLog", new  { logId = Model.Log.Id })
+                @Html.ActionLink("Edit", "UpdateSet", "Set", new  { exerciseId = set.Exercise.Id, logId = Model.Log.Id,
+           weight = set.Weight, reps = set.Reps, positionInLog = set.PositionInLog}, new { })
             </td>
         </tr>
     }

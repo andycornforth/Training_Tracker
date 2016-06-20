@@ -38,6 +38,23 @@ namespace TrainingTrackerMVC.Controllers
             return View(model);
         }
 
+        public ActionResult UpdateSet(int exerciseId, int logId, double weight, int reps, int positionInLog)
+        {
+            var exercise = _exericseBusiness.GetExerciseById(exerciseId);
+            var log = _logBusiness.GetLogById(logId);
+
+            var model = new Set()
+            {
+                Log = log,
+                Exercise = exercise,
+                Weight = weight,
+                Reps = reps,
+                PositionInLog = positionInLog
+            };
+
+            return View("Index", model);
+        }
+
         [HttpPost]
         public ActionResult Index(Set set)
         {
