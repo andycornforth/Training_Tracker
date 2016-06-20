@@ -16,7 +16,7 @@ namespace TrainingTrackerMVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{userId}",
-                defaults: new { controller = "Home", action = "Index", userId = UrlParameter.Optional }
+                defaults: new { controller = "Account", action = "LogIn", userId = UrlParameter.Optional }
             );
         }
     }

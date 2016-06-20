@@ -14,6 +14,7 @@ namespace Repository
         void AddSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
         Set GetLatestSetForLog(int logId);
+        void DeleteSet(int setId);
     }
 
     public class SetRepository : BaseSqlRepository, ISetRepository
@@ -36,7 +37,7 @@ namespace Repository
             {
                 ExecuteNonQuery(command);
             }
-            catch (SqlException e)
+            catch (SqlException)
             {
                 throw new RepositoryException("Unable to process request. Database error.");
             }
@@ -58,6 +59,22 @@ namespace Repository
             AddParameter(command, "@LogId", logId);
 
             return GetEntitiesFromDatabase<Set>(command).FirstOrDefault();
+        }
+
+        public void DeleteSet(int setId)
+        {
+            var command = GetCommand("DeleteSet", CommandType.StoredProcedure);
+
+            AddParameter(command, "@SetId", setId);
+
+            try
+            {
+                ExecuteNonQuery(command);
+            }
+            catch (SqlException)
+            {
+                throw new RepositoryException("Unable to delete set. Database error.");
+            }
         }
 
         protected override object MapRowToEntity(IDataReader reader)

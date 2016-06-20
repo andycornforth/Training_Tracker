@@ -190,6 +190,32 @@ namespace RepositoryTests
             Assert.IsNull(newSet);
         }
 
+        [TestMethod]
+        public void DeleteSetExpectSetDeleted()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+
+            set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
+
+            _setRepository.DeleteSet(set.Id);
+
+            var sets = _setRepository.GetSetsByLogId(log.Id);
+
+            Assert.AreEqual(0, sets.Count);
+        }
+
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)
         {
             var person = CreateTestPerson("andycornforth");
