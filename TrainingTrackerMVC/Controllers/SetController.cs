@@ -26,7 +26,12 @@ namespace TrainingTrackerMVC.Controllers
             var exercise = _exericseBusiness.GetExerciseById(exerciseId);
             var log = _logBusiness.GetLogById(logId);
 
-            var position = positionInLog ?? GetLatestPositionInLog(logId);
+            if (positionInLog <= log.SetCount)
+            {
+                return RedirectToAction("ViewLog", "Log", new { logId = logId });
+            }
+
+            var position = positionInLog ?? log.SetCount + 1;
 
             var model = new Set()
             {
@@ -71,7 +76,7 @@ namespace TrainingTrackerMVC.Controllers
         {
             var set = _setBusiness.GetLatestSetForLog(logId);
 
-            if(set == null)
+            if (set == null)
             {
                 return 1;
             }
