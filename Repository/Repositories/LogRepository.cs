@@ -1,5 +1,6 @@
 ﻿using Exceptions;
 using Models;
+using Repository.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -67,7 +68,8 @@ namespace Repository
                 Id = reader.GetInt32(reader.GetOrdinal("LogId")),
                 PersonId = reader.GetInt32(reader.GetOrdinal("PersonId")),
                 Title = reader.GetString(reader.GetOrdinal("Title")),
-                DateAdded = reader.GetDateTime(reader.GetOrdinal("DateAdded"))
+                DateAdded = reader.GetDateTime(reader.GetOrdinal("DateAdded")),
+                SetCount = reader.HasColumn("SetCount") ? reader.GetInt32(reader.GetOrdinal("SetCount")) : 0
             };
         }
     }

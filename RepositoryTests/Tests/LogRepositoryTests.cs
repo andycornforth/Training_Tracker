@@ -156,6 +156,47 @@ namespace RepositoryTests
             Assert.AreEqual(logs[0].Id, log.Id);
             Assert.AreEqual(userId, log.PersonId);
             Assert.AreEqual("newlog", log.Title);
+            Assert.AreEqual(0, log.SetCount);
+        }
+
+        [TestMethod]
+        public void GetLogWithSetsReturnsTheNumberOfSets()
+        {
+            var email = "test@user.com";
+
+            var logTitle = "newlog";
+
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+
+            _logRepository.AddLog(CreateTestLog(userId, logTitle));
+            var logs = _logRepository.GetAllLogsByUserId(userId);
+
+            var log = _logRepository.GetLogById(logs[0].Id);
+
+            var exerciseRepository = new ExerciseRepository();
+            exerciseRepository.AddExercise("Squat");
+            var exercise = exerciseRepository.GetAllExercises().FirstOrDefault();
+
+            var set = new Set()
+            {
+                Log = log,
+                Exercise = exercise,
+                Weight = 30,
+                Reps = 20,
+                PositionInLog = 1
+            };
+
+            var setRepository = new SetRepository();
+            setRepository.AddSet(set);
+
+            set.PositionInLog = 2;
+
+            setRepository.AddSet(set);
+
+            var returnedLog = _logRepository.GetLogById(log.Id);
+
+            Assert.AreEqual(2, returnedLog.SetCount);
         }
 
         private Log CreateTestLog(int userId, string logTitle)

@@ -8,5 +8,6 @@ namespace Models
         public int PersonId { get; set; }
         public string Title { get; set; }
         public DateTime DateAdded { get; set; }
+        public int SetCount { get; set; }
     }
 }
