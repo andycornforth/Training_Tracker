@@ -12,7 +12,6 @@ namespace Repository
     public interface ISetRepository
     {
         void AddSet(Set set);
-        void UpdateSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
         Set GetLatestSetForLog(int logId);
     }
@@ -37,27 +36,7 @@ namespace Repository
             {
                 ExecuteNonQuery(command);
             }
-            catch (SqlException e) when (e.Number == 2627)
-            {
-                throw new RepositoryException("A log cannot have 2 sets in the same position");
-            }
-        }
-
-        public void UpdateSet(Set set)
-        {
-            var command = GetCommand("UpdateSet", CommandType.StoredProcedure);
-
-            AddParameter(command, "@SetId", set.Id);
-            AddParameter(command, "@ExerciseId", set.Exercise.Id);
-            AddParameter(command, "@Weight", set.Weight);
-            AddParameter(command, "@Reps", set.Reps);
-            AddParameter(command, "@Position", set.PositionInLog);
-
-            try
-            {
-                ExecuteNonQuery(command);
-            }
-            catch (SqlException)
+            catch (SqlException e)
             {
                 throw new RepositoryException("Unable to process request. Database error.");
             }

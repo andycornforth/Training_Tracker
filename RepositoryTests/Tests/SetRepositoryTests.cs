@@ -105,8 +105,7 @@ namespace RepositoryTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
-        public void Add2SetsToLogWithTheSamePositionInLogsExpectRepositoryException()
+        public void Add2SetsToLogWithTheSamePositionExpectSetToOverwrite()
         {
             Log log;
             Exercise exercise;
@@ -121,7 +120,21 @@ namespace RepositoryTests
                 PositionInLog = 1
             };
             _setRepository.AddSet(set);
-            _setRepository.AddSet(set);
+
+            var newSet = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 6,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(newSet);
+
+            var returnedSets = _setRepository.GetSetsByLogId(log.Id);
+
+            Assert.AreEqual(1, returnedSets.Count);
+            Assert.AreEqual(6, returnedSets.First().Reps);
         }
 
 
@@ -175,49 +188,6 @@ namespace RepositoryTests
             var newSet = _setRepository.GetLatestSetForLog(logId);
 
             Assert.IsNull(newSet);
-        }
-
-        [TestMethod]
-        public void EditSetExpectSetEdited()
-        {
-            Log log;
-            Exercise exercise;
-            CreateTestLogAndExercise(out log, out exercise);
-
-            var set = new Set()
-            {
-                Exercise = exercise,
-                Log = log,
-                Weight = 82.5,
-                Reps = 5,
-                PositionInLog = 1
-            };
-            _setRepository.AddSet(set);
-
-            set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
-
-            Assert.AreEqual(82.5, set.Weight);
-
-            _exerciseRepository.AddExercise("Overhead Press");
-            var newExercise = _exerciseRepository.GetAllExercises().Where(x => x.Id != exercise.Id).FirstOrDefault();
-
-            set = new Set()
-            {
-                Id = set.Id,
-                Exercise = new Exercise() { Id = newExercise.Id },
-                Weight = 60,
-                Reps = 10,
-                PositionInLog = 2
-            };
-
-            _setRepository.UpdateSet(set);
-
-            set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
-
-            Assert.AreEqual(newExercise.Id, set.Exercise.Id);
-            Assert.AreEqual(60, set.Weight);
-            Assert.AreEqual(10, set.Reps);
-            Assert.AreEqual(2, set.PositionInLog);
         }
 
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)

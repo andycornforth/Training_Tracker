@@ -117,37 +117,5 @@ namespace BusinessTests
 
             Assert.AreEqual(_sets.FirstOrDefault(), set);
         }
-
-        [TestMethod]
-        public void UpdateSetExpectNoErrorThrown()
-        {
-            var set = new Set()
-            {
-                Log = new Log(),
-                Exercise = new Exercise(),
-                PositionInLog = 1,
-                Weight = 100,
-                Reps = 20
-            };
-
-            _setBusiness.UpdateSet(set);
-
-            _mockSetRepository.Verify(x => x.UpdateSet(It.IsAny<Set>()), Times.Once);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BusinessException), "The set is not associated to an exercise")]
-        public void UpdateSetWithNullExerciseExpectBusinessErrorThrown()
-        {
-            var set = new Set()
-            {
-                Log = new Log(),
-                PositionInLog = 1,
-                Weight = 100,
-                Reps = 20
-            };
-
-            _setBusiness.UpdateSet(set);
-        }
     }
 }
