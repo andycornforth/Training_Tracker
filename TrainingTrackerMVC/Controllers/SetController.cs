@@ -21,7 +21,7 @@ namespace TrainingTrackerMVC.Controllers
             _setBusiness = setBusiness;
         }
 
-        public ActionResult Index(int exerciseId, int logId, int? positionInLog)
+        public ActionResult Index(int exerciseId, int logId, int? positionInLog, double? weight, int? reps)
         {
             var exercise = _exericseBusiness.GetExerciseById(exerciseId);
             var log = _logBusiness.GetLogById(logId);
@@ -39,6 +39,12 @@ namespace TrainingTrackerMVC.Controllers
                 Exercise = exercise,
                 PositionInLog = position
             };
+
+            if(weight != null & reps != null)
+            {
+                model.Weight = weight ?? 0;
+                model.Reps = reps ?? 0;
+            }
 
             return View(model);
         }
@@ -76,7 +82,7 @@ namespace TrainingTrackerMVC.Controllers
 
             var position = set.PositionInLog + 1;
 
-            return Index(set.Exercise.Id, set.Log.Id, position);
+            return Index(set.Exercise.Id, set.Log.Id, position, set.Weight, set.Reps);
         }
 
         private int GetLatestPositionInLog(int logId)
