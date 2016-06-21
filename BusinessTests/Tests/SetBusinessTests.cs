@@ -117,5 +117,13 @@ namespace BusinessTests
 
             Assert.AreEqual(_sets.FirstOrDefault(), set);
         }
+
+        [TestMethod]
+        public void DeleteSetExpectNoErrorThrown()
+        {
+            _setBusiness.DeleteSet(1);
+
+            _mockSetRepository.Verify(x => x.DeleteSet(It.IsAny<int>()), Times.Once);
+        }
     }
 }
