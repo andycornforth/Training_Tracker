@@ -14,7 +14,7 @@ namespace Repository
         void AddSet(Set set);
         IList<Set> GetSetsByLogId(int logId);
         Set GetLatestSetForLog(int logId);
-        void DeleteSet(int setId);
+        void DeleteSet(int logId, int setId);
     }
 
     public class SetRepository : BaseSqlRepository, ISetRepository
@@ -61,10 +61,11 @@ namespace Repository
             return GetEntitiesFromDatabase<Set>(command).FirstOrDefault();
         }
 
-        public void DeleteSet(int setId)
+        public void DeleteSet(int logId, int setId)
         {
             var command = GetCommand("DeleteSet", CommandType.StoredProcedure);
 
+            AddParameter(command, "@LogId", logId);
             AddParameter(command, "@SetId", setId);
 
             try

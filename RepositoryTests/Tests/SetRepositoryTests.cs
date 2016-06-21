@@ -209,11 +209,49 @@ namespace RepositoryTests
 
             set = _setRepository.GetSetsByLogId(log.Id).FirstOrDefault();
 
-            _setRepository.DeleteSet(set.Id);
+            _setRepository.DeleteSet(log.Id, set.Id);
 
             var sets = _setRepository.GetSetsByLogId(log.Id);
 
             Assert.AreEqual(0, sets.Count);
+        }
+
+        [TestMethod]
+        public void DeleteSetExpectSetsWithHigherPositionsToBeMovedDownPosition()
+        {
+            Log log;
+            Exercise exercise;
+            CreateTestLogAndExercise(out log, out exercise);
+
+            var set = new Set()
+            {
+                Exercise = exercise,
+                Log = log,
+                Weight = 82.5,
+                Reps = 5,
+                PositionInLog = 1
+            };
+            _setRepository.AddSet(set);
+            set.PositionInLog = 2;
+            set.Reps = 4; // changed reps to check it is a different set
+            _setRepository.AddSet(set);
+            set.PositionInLog = 3;
+            set.Reps = 3;
+            _setRepository.AddSet(set);
+
+            var sets = _setRepository.GetSetsByLogId(log.Id);
+
+            set.Id = sets.FirstOrDefault().Id;
+
+            _setRepository.DeleteSet(log.Id, set.Id);
+
+            sets = _setRepository.GetSetsByLogId(log.Id);
+
+            Assert.AreEqual(2, sets.Count);
+            Assert.AreEqual(1, sets.FirstOrDefault().PositionInLog);
+            Assert.AreEqual(2, sets.LastOrDefault().PositionInLog);
+            Assert.AreEqual(4, sets.FirstOrDefault().Reps);
+            Assert.AreEqual(3, sets.LastOrDefault().Reps);
         }
 
         private void CreateTestLogAndExercise(out Log log, out Exercise exercise)

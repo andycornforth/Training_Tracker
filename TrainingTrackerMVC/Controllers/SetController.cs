@@ -62,7 +62,7 @@ namespace TrainingTrackerMVC.Controllers
 
         public ActionResult DeleteSet(int logId, int setId)
         {
-            _setBusiness.DeleteSet(setId);
+            _setBusiness.DeleteSet(logId, setId);
 
             return RedirectToAction("ViewLog", "Log", new { logId = logId });
         }
