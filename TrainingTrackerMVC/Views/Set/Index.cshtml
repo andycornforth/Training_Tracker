@@ -5,13 +5,18 @@
 
 <h2>Set @Model.PositionInLog</h2>
 
-@Html.ActionLink("Return to log", "ViewLog", "Log", new { logId = Model.Log.Id}, new { })
+@Html.ActionLink("Return to log", "ViewLog", "Log", new { logId = Model.Log.Id }, new { })
 
 @using (Html.BeginForm("Index", "Set", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Log.Id)
 
     <h3>@Model.Exercise.Title</h3>
+
+    <div>
+        @Html.ActionLink("Change Exercise", "Index", "Exercise", new { logId = Model.Log.Id }, new { })
+    </div>
+
     @Html.HiddenFor(m => m.Exercise.Id)
 
     @Html.LabelFor(m => m.Weight)
