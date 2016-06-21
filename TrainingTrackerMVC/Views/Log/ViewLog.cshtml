@@ -44,7 +44,7 @@
            weight = set.Weight, reps = set.Reps, positionInLog = set.PositionInLog}, new { })
             </td>
             <td>
-                  @Html.ActionLink("Delete", "DeleteSet", "Set", new  { setId = set.Id }, new { })
+                  @Html.ActionLink("Delete", "DeleteSet", "Set", new  { logId = Model.Log.Id, setId = set.Id }, new { })
             </td>
         </tr>
     }

@@ -60,6 +60,13 @@ namespace TrainingTrackerMVC.Controllers
             return View("Index", model);
         }
 
+        public ActionResult DeleteSet(int logId, int setId)
+        {
+            _setBusiness.DeleteSet(setId);
+
+            return RedirectToAction("ViewLog", "Log", new { logId = logId });
+        }
+
         [HttpPost]
         public ActionResult Index(Set set)
         {
