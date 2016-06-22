@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Home</h2>
 
 @Html.HiddenFor(m => m.Id)
 @using (Html.BeginForm("ViewAllLogs", "Log", new { userId = Model.Id }, FormMethod.Get))
