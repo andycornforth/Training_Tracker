@@ -1,3 +1,36 @@
 ﻿body {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: white;
+  letter-spacing: 1px;
+}
+#left-menu {
+  height: 100%;
+  width: 185px;
+  padding: 5px;
+  left: 0;
+  top: 0;
+  position: fixed;
+  background: #ffce00;
+  text-align: center;
+  color: #007849;
+}
+#container {
+  margin-left: 200px;
+  padding: 10px;
+  top: 0;
+  width: 100%;
+  bottom: 75px;
+  position: fixed;
+  background: #0375b4;
+  overflow: auto;
+}
+footer {
+  margin-left: 200px;
+  padding: 10px;
+  height: 50px;
+  background: #007849;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
 }

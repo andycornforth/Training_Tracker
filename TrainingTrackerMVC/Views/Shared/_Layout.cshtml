@@ -8,13 +8,15 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div id="left-menu">
+        <h3>Training Tracker</h3>
+    </div>
     <div id="container">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Training Tracker</p>
-        </footer>
     </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Training Tracker</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
