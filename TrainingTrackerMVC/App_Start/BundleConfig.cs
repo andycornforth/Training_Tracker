@@ -24,7 +24,8 @@ namespace TrainingTrackerMVC
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/default.css"));
+                      "~/Content/default.css",
+                      "~/Content/loginAndRegister.css"));
         }
     }
 }

@@ -211,10 +211,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Default.css">
-      <DependentUpon>Default.less</DependentUpon>
+      <DependentUpon>default.less</DependentUpon>
     </Content>
     <Content Include="Content\Default.min.css">
       <DependentUpon>Default.css</DependentUpon>
+    </Content>
+    <Content Include="Content\LoginAndRegister.css">
+      <DependentUpon>loginAndRegister.less</DependentUpon>
+    </Content>
+    <Content Include="Content\LoginAndRegister.min.css">
+      <DependentUpon>LoginAndRegister.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -225,11 +231,12 @@
       <Link>ConnectionString.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Default.less" />
+    <Content Include="Content\default.less" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\loginAndRegister.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
