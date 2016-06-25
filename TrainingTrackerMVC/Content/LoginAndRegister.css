@@ -1,5 +1,14 @@
 ﻿.label {
-  width: 100px;
+  width: 150px;
   display: inline-block;
   margin: 5px;
+}
+#login-button .button {
+  margin-left: 170px;
+  margin-bottom: 10px;
+  width: 184px;
+}
+.register-a {
+  display: block;
+  margin-bottom: 20px;
 }

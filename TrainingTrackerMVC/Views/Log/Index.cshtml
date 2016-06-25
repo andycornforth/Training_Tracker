@@ -4,18 +4,19 @@
 }
 
 <h2>Home</h2>
+<hr />
 
 @Html.HiddenFor(m => m.Id)
 @using (Html.BeginForm("ViewAllLogs", "Log", new { userId = Model.Id }, FormMethod.Get))
 {
     <div>
-        <input type="submit" value="View your logs" class="button"/>
+        <input type="submit" value="View your logs" class="button" />
     </div>
 }
 
 @using (Html.BeginForm("AddLogView", "Log", new { userId = Model.Id }, FormMethod.Get))
 {
     <div>
-        <input type="submit" value="Create a new log" class="button"/>
+        <input type="submit" value="Create a new log" class="button" />
     </div>
 }
