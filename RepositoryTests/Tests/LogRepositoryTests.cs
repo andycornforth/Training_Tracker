@@ -119,7 +119,7 @@ namespace RepositoryTests
         }
 
         [TestMethod]
-        public void GetAllLogsFromDatabaseByUsername()
+        public void GetAllLogsFromDatabaseById()
         {
             var email = "test@user.com";
 
@@ -136,6 +136,45 @@ namespace RepositoryTests
 
             Assert.AreEqual(2, allLogs.Count);
             Assert.AreEqual("newlog", allLogs[0].Title);
+        }
+
+        [TestMethod]
+        public void GetAllLogsFromDatabaseByIdExpectSetCount()
+        {
+            var email = "test@user.com";
+
+            var logTitle = "newlog";
+
+            AddPersonToDatabase(email);
+            var userId = _personRepository.GetPersonByUsername(email).Id;
+
+            var log = CreateTestLog(userId, logTitle);
+
+            _logRepository.AddLog(log);
+
+            var exerciseRepository = new ExerciseRepository();
+            exerciseRepository.AddExercise("Squat");
+            var exercise = exerciseRepository.GetAllExercises().FirstOrDefault();
+
+            log = _logRepository.GetAllLogsByUserId(userId).FirstOrDefault();
+
+            var set = new Set()
+            {
+                Log = log,
+                Exercise = exercise,
+                Weight = 30,
+                Reps = 20,
+                PositionInLog = 1
+            };
+
+            var setRepository = new SetRepository();
+            setRepository.AddSet(set);
+            set.PositionInLog = 2;
+            setRepository.AddSet(set);
+
+            var allLogs = _logRepository.GetAllLogsByUserId(userId);
+
+            Assert.AreEqual(2, allLogs.FirstOrDefault().SetCount);
         }
 
         [TestMethod]
