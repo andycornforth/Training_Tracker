@@ -76,3 +76,22 @@ a:hover {
 input[type=date] {
   width: 170px;
 }
+table {
+  margin: 20px;
+  width: 50%;
+}
+table a {
+  text-decoration: none;
+}
+table th {
+  text-align: left;
+  padding: 5px;
+  border-bottom: solid 2px #ffce00;
+  color: #ffce00;
+}
+table td {
+  padding: 5px;
+}
+table tr:hover {
+  color: #ffce00;
+}

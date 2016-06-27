@@ -5,19 +5,25 @@
 }
 
 <h2>View Logs</h2>
+<hr />
 
-@Html.ActionLink("<- Back", "Index", new { userId = Model.FirstOrDefault().PersonId })
+<a href="@Url.Action("Index", "Log", new { userId = Model.FirstOrDefault().PersonId })"><span>&#8592 Back</span></a>
 
 <div>
     <table>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Date Added
-            </th>
-        </tr>
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Date Added
+                </th>
+                <th width="40px">
+                    Sets
+                </th>
+            </tr>
+        </thead>
         @foreach (var log in Model)
         {
             <tr>
@@ -26,6 +32,9 @@
                 </td>
                 <td>
                     @log.DateAdded
+                </td>
+                <td>
+                    @log.SetCount
                 </td>
             </tr>
         }
