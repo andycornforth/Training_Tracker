@@ -6,7 +6,7 @@
 <h2>Set @Model.PositionInLog</h2>
 <hr />
 
-<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })"><span>&#8592 Return to log</span></a>
+<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })"  class="back-btn"><span>&#8592 Return to log</span></a>
 
 @using (Html.BeginForm("Index", "Set", FormMethod.Post))
 {

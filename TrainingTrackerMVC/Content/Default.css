@@ -76,8 +76,11 @@ a:hover {
 input[type=date] {
   width: 170px;
 }
+.back-btn {
+  margin-bottom: 20px;
+  display: block;
+}
 table {
-  margin: 20px;
   width: 50%;
 }
 table a {

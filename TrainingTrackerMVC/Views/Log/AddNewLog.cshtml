@@ -7,7 +7,7 @@
 <h2>Logs</h2>
 <hr />
 
-<a href="@Url.Action("Index", "Log", new { userId = Model.PersonId })"><span>&#8592 Back</span></a>
+<a href="@Url.Action("Index", "Log", new { userId = Model.PersonId })" class="back-btn"><span>&#8592 Back</span></a>
 
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @using (Html.BeginForm("AddLog", "Log", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -15,11 +15,11 @@
     @Html.AntiForgeryToken()
     <div id="add-new-log">
         @Html.HiddenFor(m => m.PersonId)
-        @Html.LabelFor(m => m.Title)
+        @Html.LabelFor(m => m.Title, new { @class = "label"})
         @Html.TextBoxFor(m => m.Title)
     </div>
 
-    <div>
-        <input type="submit" value="Create New Log" />
+    <div id="login-button">
+        <input type="submit" value="Create New Log" class="button"/>
     </div>
 }
