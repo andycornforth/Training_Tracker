@@ -4,8 +4,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<hr />
 
-@Html.ActionLink("<- Back", "ViewLog", "Log", new { logId = Model.Log.Id }, new { })
+<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })"><span>&#8592 Back</span></a>
 
 @using (Html.BeginForm("AddExercise", "Exercise", FormMethod.Post))
 {

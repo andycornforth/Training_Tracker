@@ -4,8 +4,9 @@
 }
 
 <h2>Set @Model.PositionInLog</h2>
+<hr />
 
-@Html.ActionLink("Return to log", "ViewLog", "Log", new { logId = Model.Log.Id }, new { })
+<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })"><span>&#8592 Return to log</span></a>
 
 @using (Html.BeginForm("Index", "Set", FormMethod.Post))
 {

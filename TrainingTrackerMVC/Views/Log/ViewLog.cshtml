@@ -5,9 +5,11 @@
 
 @Html.HiddenFor(m => m.Log.Id)
 <h2>@Model.Log.Title</h2>
+<hr />
+
 <h3>@Model.Log.DateAdded</h3>
 
-@Html.ActionLink("<- Back","ViewAllLogs", new { userId = Model.Log.PersonId })
+<a href="@Url.Action("ViewAllLogs", "Log", new {  userId = Model.Log.PersonId })"><span>&#8592 Back</span></a>
 
 <table>
     <tr>
@@ -40,11 +42,17 @@
                 @set.Reps
             </td>
             <td>
-                @Html.ActionLink("Edit", "UpdateSet", "Set", new  { exerciseId = set.Exercise.Id, logId = Model.Log.Id,
-           weight = set.Weight, reps = set.Reps, positionInLog = set.PositionInLog}, new { })
+                @Html.ActionLink("Edit", "UpdateSet", "Set", new
+           {
+               exerciseId = set.Exercise.Id,
+               logId = Model.Log.Id,
+               weight = set.Weight,
+               reps = set.Reps,
+               positionInLog = set.PositionInLog
+           }, new { })
             </td>
             <td>
-                  @Html.ActionLink("Delete", "DeleteSet", "Set", new  { logId = Model.Log.Id, setId = set.Id }, new { })
+                @Html.ActionLink("Delete", "DeleteSet", "Set", new { logId = Model.Log.Id, setId = set.Id }, new { })
             </td>
         </tr>
     }
