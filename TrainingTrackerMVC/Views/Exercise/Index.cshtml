@@ -11,9 +11,8 @@
 @using (Html.BeginForm("AddExercise", "Exercise", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Log.Id)
-    @Html.LabelFor(m => m.ExerciseToAdd.Title)
     @Html.EditorFor(m => m.ExerciseToAdd.Title)
-    <input type="submit" value="Go" />
+    <input type="submit" value="Add Exercise" class="button right-btn"/>
 }
 
 @Html.HiddenFor(m => m.Log.Id)
@@ -23,12 +22,14 @@
             Exercises
         </th>
     </tr>
-    <tr>
-        @foreach (var exercise in Model.AllExercises)
-            {
+
+    @foreach (var exercise in Model.AllExercises)
+    {
+        <tr>
             <td>
                 @Html.ActionLink(exercise.Title, "GetExercise", new { exerciseId = exercise.Id, logId = Model.Log.Id })
             </td>
-        }
-    </tr>
+        </tr>
+    }
+
 </table>

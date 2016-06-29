@@ -71,7 +71,7 @@ a:hover {
 
 .button {
     position: relative;
-    vertical-align: top;
+    vertical-align: middle;
     height: 40px;
     width: 200px;
     margin: 5px;
@@ -86,6 +86,8 @@ a:hover {
     cursor: pointer;
     -webkit-box-shadow: inset 0 -2px #e2b607;
     box-shadow: inset 0 -2px #e2b607;
+    display: table-cell;
+    text-decoration: none;
 }
 
 .button:hover {
@@ -123,4 +125,13 @@ table td {
 
 table tr:hover {
     color: @col-1;
+}
+
+.right-btn {
+    height: 31px;
+}
+
+#change-exercise-link {
+    margin-bottom: 10px;
+    display: block;
 }

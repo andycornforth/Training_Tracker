@@ -6,19 +6,17 @@
 <h2>Set @Model.PositionInLog</h2>
 <hr />
 
-<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })"  class="back-btn"><span>&#8592 Return to log</span></a>
-
+<a href="@Url.Action("ViewLog", "Log", new {  logId = Model.Log.Id  })" class="back-btn"><span>&#8592 Return to log</span></a>
+<a href="@Url.Action("Index", "Exercise", new {  logId = Model.Log.Id  })" class="back-btn"><span>&#8592 Change Exercise</span></a>
 @using (Html.BeginForm("Index", "Set", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Log.Id)
+    @Html.HiddenFor(m => m.Exercise.Id)
+    @Html.HiddenFor(m => m.PositionInLog)
+
+    <hr />
 
     <h3>@Model.Exercise.Title</h3>
-
-    <div>
-        @Html.ActionLink("Change Exercise", "Index", "Exercise", new { logId = Model.Log.Id }, new { })
-    </div>
-
-    @Html.HiddenFor(m => m.Exercise.Id)
 
     @Html.LabelFor(m => m.Weight)
     @Html.EditorFor(m => m.Weight)
@@ -26,7 +24,7 @@
     @Html.LabelFor(m => m.Reps)
     @Html.EditorFor(m => m.Reps)
 
-    @Html.HiddenFor(m => m.PositionInLog)
+    <input type="submit" value="Add Set" class="button right-btn" />
 
-    <input type="submit" value="Go" />
+    <hr />
 }
