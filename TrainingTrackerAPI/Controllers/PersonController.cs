@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TrainingTrackerAPI.Mappers;
+using TrainingTrackerAPI.Models;
 
 namespace TrainingTrackerAPI.Controllers
 {
@@ -18,10 +20,21 @@ namespace TrainingTrackerAPI.Controllers
             _personBusiness = personBusiness;
         }
 
-        public IHttpActionResult AddPerson(Person person)
+        public IHttpActionResult AddPerson(ApiPerson person)
         {
-            _personBusiness.AddPersonToDatabase(person);
+            var dataPerson = PersonMapper.ApiToDataModel(person);
+            _personBusiness.AddPersonToDatabase(dataPerson);
+
             return Ok();
+        }
+
+        public IHttpActionResult GetPersonByUsername(string username)
+        {
+            var person = _personBusiness.GetPersonByUsername(username);
+
+            var apiPerson = PersonMapper.DataToApiModel(person);
+
+            return Ok(apiPerson);
         }
     }
 }

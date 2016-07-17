@@ -25,6 +25,11 @@ namespace Business
             _logRepository = logRepository;
         }
 
+        /// <summary>
+        /// Adds a Log to the database and returns the Log Id
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns></returns>
         public int AddLogToDatabase(Log log)
         {
             if (log == null)
