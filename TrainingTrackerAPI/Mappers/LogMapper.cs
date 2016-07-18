@@ -32,5 +32,17 @@ namespace TrainingTrackerAPI.Mappers
                 SetCount = log.SetCount
             };
         }
+
+        public static IList<ApiLog> DataListToApiList(IList<Log> logs)
+        {
+            var apiLogs = new List<ApiLog>();
+
+            foreach (var log in logs)
+            {
+                apiLogs.Add(DataToApiModel(log));
+            };
+
+            return apiLogs;
+        }
     }
 }

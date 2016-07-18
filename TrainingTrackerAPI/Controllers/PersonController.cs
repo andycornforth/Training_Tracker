@@ -20,6 +20,7 @@ namespace TrainingTrackerAPI.Controllers
             _personBusiness = personBusiness;
         }
 
+        [HttpPost]
         public IHttpActionResult AddPerson(ApiPerson person)
         {
             var dataPerson = PersonMapper.ApiToDataModel(person);
@@ -28,6 +29,7 @@ namespace TrainingTrackerAPI.Controllers
             return Ok();
         }
 
+        [HttpGet]
         public IHttpActionResult GetPersonByUsername(string username)
         {
             var person = _personBusiness.GetPersonByUsername(username);

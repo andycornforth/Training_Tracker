@@ -29,11 +29,6 @@ namespace TrainingTrackerAPITests.Helpers
             };
         }
 
-        internal static ApiLog GetTestApiLog()
-        {
-            return new ApiLog();
-        }
-
         public static Person GetTestDataPerson(string username)
         {
             return new Person()
@@ -45,6 +40,22 @@ namespace TrainingTrackerAPITests.Helpers
                 Email = "email@address.com",
                 DOB = new DateTime(1993, 1, 22),
                 Gender = Gender.MALE
+            };
+        }
+
+        internal static ApiLog GetTestApiLog()
+        {
+            return new ApiLog();
+        }
+
+        public static List<Log> GetTestDataLogList()
+        {
+            return new List<Log>()
+            {
+                new Log() {
+                    Title = "Test log",
+                    DateAdded = DateTime.Now
+                },
             };
         }
     }

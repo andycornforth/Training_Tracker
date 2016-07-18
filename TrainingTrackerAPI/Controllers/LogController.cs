@@ -20,11 +20,19 @@ namespace TrainingTrackerAPI.Controllers
             _logBusiness = logBusiness;
         }
 
+        [HttpPost]
         public IHttpActionResult AddLog(ApiLog log)
         {
             var dataLog = LogMapper.ApiToDataModel(log);
             var logId = _logBusiness.AddLogToDatabase(dataLog);
             return Ok(logId);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetLogsByUserId(int userId)
+        {
+            var apiLogs = LogMapper.DataListToApiList(_logBusiness.GetAllLogsByUserId(userId));
+            return Ok(apiLogs);
         }
     }
 }
