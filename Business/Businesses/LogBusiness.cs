@@ -38,6 +38,11 @@ namespace Business
             return _logRepository.AddLog(log);
         }
 
+        /// <summary>
+        /// Returns all the logs for a specific User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IList<Log> GetAllLogsByUserId(int userId)
         {
             if (userId == 0)
@@ -46,6 +51,11 @@ namespace Business
             return _logRepository.GetAllLogsByUserId(userId);
         }
 
+        /// <summary>
+        /// Returns the specific log by its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Log GetLogById(int id) => _logRepository.GetLogById(id);
     }
 }

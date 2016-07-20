@@ -51,5 +51,21 @@ namespace TrainingTrackerAPITests
 
             Assert.AreEqual(dataLogs.FirstOrDefault().DateAdded, apiLogs.FirstOrDefault().DateAdded);
         }
+
+        [TestMethod]
+        public void GetLogByIdExpectLogReturnedAnd200Ok()
+        {
+            var dataLog = TestHelper.GetTestDataLog();
+
+            _mockLogBusiness.Setup(x => x.GetLogById(It.IsAny<int>())).Returns(dataLog);
+
+            var result = _logController.GetLogById(1);
+
+            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ApiLog>));
+
+            var apiLog = (result as OkNegotiatedContentResult<ApiLog>).Content;
+
+            Assert.AreEqual(dataLog.Title, apiLog.Title);
+        }
     }
 }

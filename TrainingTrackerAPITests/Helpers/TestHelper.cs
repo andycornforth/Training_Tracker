@@ -43,9 +43,12 @@ namespace TrainingTrackerAPITests.Helpers
             };
         }
 
-        internal static ApiLog GetTestApiLog()
+        internal static ApiLog GetTestApiLog(string title = "Test")
         {
-            return new ApiLog();
+            return new ApiLog()
+            {
+                Title = title
+            };
         }
 
         public static List<Log> GetTestDataLogList()
@@ -56,6 +59,14 @@ namespace TrainingTrackerAPITests.Helpers
                     Title = "Test log",
                     DateAdded = DateTime.Now
                 },
+            };
+        }
+
+        public static Log GetTestDataLog(string title = "Test")
+        {
+            return new Log()
+            {
+                Title = title
             };
         }
     }

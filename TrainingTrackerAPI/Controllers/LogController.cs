@@ -34,5 +34,12 @@ namespace TrainingTrackerAPI.Controllers
             var apiLogs = LogMapper.DataListToApiList(_logBusiness.GetAllLogsByUserId(userId));
             return Ok(apiLogs);
         }
+
+        [HttpGet]
+        public IHttpActionResult GetLogById(int logId)
+        {
+            var apiLog = LogMapper.DataToApiModel(_logBusiness.GetLogById(logId));
+            return Ok(apiLog);
+        }
     }
 }
