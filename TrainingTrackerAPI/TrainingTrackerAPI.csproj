@@ -80,13 +80,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\ExerciseMapper.cs" />
     <Compile Include="Mappers\LogMapper.cs" />
     <Compile Include="Mappers\PersonMapper.cs" />
+    <Compile Include="Models\ApiExercise.cs" />
     <Compile Include="Models\ApiGender.cs" />
     <Compile Include="Models\ApiLog.cs" />
     <Compile Include="Models\ApiPerson.cs" />

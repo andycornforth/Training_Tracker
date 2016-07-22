@@ -29,6 +29,14 @@ namespace TrainingTrackerAPITests.Helpers
             };
         }
 
+        public static List<Exercise> GetTestDataExerciseList()
+        {
+            return new List<Exercise>()
+            {
+                new Exercise()
+            };
+        }
+
         public static Person GetTestDataPerson(string username)
         {
             return new Person()

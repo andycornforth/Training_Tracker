@@ -25,8 +25,17 @@ namespace Business
             _exerciseRepository = exerciseRepository;
         }
 
+        /// <summary>
+        /// Returns all of the exercises from the repository
+        /// </summary>
+        /// <returns></returns>
         public IList<Exercise> GetAllExercises() => _exerciseRepository.GetAllExercises();
 
+        /// <summary>
+        /// Returns the exercise by title, if the exercise does not exist it adds a new entry to the repository.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
         public Exercise GetExercise(string title)
         {
             if (title == null || title.Equals(string.Empty))
@@ -35,6 +44,11 @@ namespace Business
             return _exerciseRepository.AddExercise(title);
         }
 
+        /// <summary>
+        /// Returns the exercise by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Exercise GetExerciseById(int id)
         {
             var exercise = _exerciseRepository.GetExerciseById(id);

@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Tests\BaseControllerTests.cs" />
+    <Compile Include="Tests\ExerciseControllerTests.cs" />
     <Compile Include="Tests\LogControllerTests.cs" />
     <Compile Include="Tests\PersonControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
