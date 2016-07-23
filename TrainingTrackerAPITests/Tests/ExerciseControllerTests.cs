@@ -30,5 +30,21 @@ namespace TrainingTrackerAPITests
 
             Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<IList<ApiExercise>>));
         }
+
+        [TestMethod]
+        public void GetExerciseReturnExerciseAnd200Ok()
+        {
+            var title = "new title";
+            var dataExercise = TestHelper.GetTestDataExercise(title);
+            _mockExerciseBusiness.Setup(x => x.GetExercise(It.IsAny<string>())).Returns(dataExercise);
+
+            var result = _exerciseController.GetExerciseByTitle(title);
+
+            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ApiExercise>));
+
+            var exercise = (result as OkNegotiatedContentResult<ApiExercise>).Content;
+
+            Assert.AreEqual(title, exercise.Title);
+        }
     }
 }

@@ -51,6 +51,14 @@ namespace TrainingTrackerAPITests.Helpers
             };
         }
 
+        public static Exercise GetTestDataExercise(string title = "test title")
+        {
+            return new Exercise()
+            {
+                Title = title
+            };
+        }
+
         internal static ApiLog GetTestApiLog(string title = "Test")
         {
             return new ApiLog()

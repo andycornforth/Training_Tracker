@@ -25,5 +25,11 @@ namespace TrainingTrackerAPI.Controllers
             var apiList = ExerciseMapper.DataListToApiList(_exerciseBusiness.GetAllExercises());
             return Ok(apiList);
         }
+
+        public IHttpActionResult GetExerciseByTitle(string title)
+        {
+            var apiExercise = ExerciseMapper.DataToApiModel(_exerciseBusiness.GetExercise(title));
+            return Ok(apiExercise);
+        }
     }
 }
