@@ -55,6 +55,7 @@ namespace TrainingTrackerAPITests.Helpers
         {
             return new Exercise()
             {
+                Id = 1,
                 Title = title
             };
         }

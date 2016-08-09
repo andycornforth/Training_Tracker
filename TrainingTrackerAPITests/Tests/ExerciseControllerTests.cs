@@ -46,5 +46,21 @@ namespace TrainingTrackerAPITests
 
             Assert.AreEqual(title, exercise.Title);
         }
+
+        [TestMethod]
+        public void GetExerciseByIdReturnsExerciseAnd200Ok()
+        {
+            var id = 1;
+            var dataExercise = TestHelper.GetTestDataExercise();
+            _mockExerciseBusiness.Setup(x => x.GetExerciseById(It.IsAny<int>())).Returns(dataExercise);
+
+            var result = _exerciseController.GetExerciseById(id);
+
+            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ApiExercise>));
+
+            var exercise = (result as OkNegotiatedContentResult<ApiExercise>).Content;
+
+            Assert.AreEqual(id, exercise.Id);
+        }
     }
 }
